@@ -1,4 +1,4 @@
-package com.htp;
+package com.htp.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class Car {
     private Long id;
     private String carName;
+    private String testString;
 }
 
 
