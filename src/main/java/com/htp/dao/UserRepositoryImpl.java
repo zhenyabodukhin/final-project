@@ -17,7 +17,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     private DataSource dataSource;
 
-    public static final String url = "jdbc:postgresql://localhost:5432/test_database";
+    public static final String url = "jdbc:postgresql://localhost:5432/postgres";
     public static final String username = "postgres";
     public static final String password = "root";
     public static final int initialSize = 10;
