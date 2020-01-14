@@ -1,9 +1,11 @@
 package com.htp;
 
-import com.htp.domain.Car;
+import com.htp.dao.UserRepository;
+import com.htp.dao.UserRepositoryImpl;
 
 public class TestClass {
     public static void main(String[] args) {
-        System.out.println(new Car().getId());
+        UserRepository repository = new UserRepositoryImpl();
+        repository.findAll();
     }
 }
