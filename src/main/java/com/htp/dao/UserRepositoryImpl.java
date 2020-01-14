@@ -6,6 +6,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,13 +17,14 @@ public class UserRepositoryImpl implements UserRepository {
 
     private DataSource dataSource;
 
-    public static final String url = "jdbc:postgresql://localhost:5433/test_database";
+    public static final String url = "jdbc:postgresql://localhost:5432/test_database";
     public static final String username = "postgres";
     public static final String password = "root";
     public static final int initialSize = 10;
 
     private DataSource init() {
         BasicDataSource basicDataSource = new BasicDataSource();
+
         basicDataSource.setDriverClassName(url);
         basicDataSource.setUsername(username);
         basicDataSource.setPassword(password);
@@ -53,8 +55,8 @@ public class UserRepositoryImpl implements UserRepository {
         dataSource = init();
         try {
             //
-
-            Connection connection = dataSource.getConnection();
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection(url, username, password);
             PreparedStatement preparedStatement = connection.prepareStatement("select * from m_users");
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -67,7 +69,7 @@ public class UserRepositoryImpl implements UserRepository {
             for (User user : users) {
                 System.out.println(user);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;
