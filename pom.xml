@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>test-maven-inner-module</module>
+        <module>final-project1</module>
     </modules>
 
     <packaging>pom</packaging>
