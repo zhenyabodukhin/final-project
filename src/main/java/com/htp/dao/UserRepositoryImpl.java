@@ -1,7 +1,7 @@
 package com.htp.dao;
 
 import com.htp.domain.User;
-import com.htp.util.DatabasePropertiesUtil;
+import com.htp.exception.NoSuchEntityException;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.sql.DataSource;
@@ -39,9 +39,11 @@ public class UserRepositoryImpl implements UserRepository {
         return 0;
     }
 
+    public static final String ID = "id";
+
     private User fillObject(ResultSet set) throws SQLException {
         User user = new User();
-        user.setId(set.getLong("id"));
+        user.setId(set.getLong(ID));
         user.setFirstName(set.getString("first_name"));
         user.setLastName(set.getString("last_name"));
         user.setBirthDate(set.getDate("birth_date"));
@@ -53,10 +55,11 @@ public class UserRepositoryImpl implements UserRepository {
     public List<User> findAll() {
 
         dataSource = init();
+        Connection connection = null;
         try {
             //
             Class.forName("org.postgresql.Driver");
-            Connection connection = DriverManager.getConnection(url, username, password);
+            connection = DriverManager.getConnection(url, username, password);
             PreparedStatement preparedStatement = connection.prepareStatement("select * from m_users");
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -71,6 +74,36 @@ public class UserRepositoryImpl implements UserRepository {
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (!connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public User findOne(Long userId) {
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            Class.forName("org.postgresql.Driver");
+            //
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from m_users where id = ?");
+            preparedStatement.setLong(1, userId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                System.out.println(fillObject(resultSet));
+            } else {
+                throw new NoSuchEntityException(String.format("User with id %s not found", userId));
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException("eroor!!");
         }
         return null;
     }

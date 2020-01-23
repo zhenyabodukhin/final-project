@@ -6,6 +6,7 @@ import com.htp.dao.UserRepositoryImpl;
 public class TestClass {
     public static void main(String[] args) {
         UserRepository repository = new UserRepositoryImpl();
-        repository.findAll();
+        //repository.findAll();
+        repository.findOne(100L);
     }
 }
