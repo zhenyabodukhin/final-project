@@ -41,11 +41,11 @@ public class UserRepositoryImpl implements UserRepository {
 
     private User fillObject(ResultSet set) throws SQLException {
         User user = new User();
-        user.setId(set.getLong("id"));
-        user.setFirstName(set.getString("first_name"));
-        user.setLastName(set.getString("last_name"));
-        user.setBirthDate(set.getDate("birth_date"));
-        user.setWeight(set.getDouble("weight"));
+        user.setId(set.getLong(1));
+        user.setFirstName(set.getString(2));
+        user.setLastName(set.getString(3));
+        user.setBirthDate(set.getDate(4));
+        user.setWeight(set.getDouble(5));
         return user;
     }
 
@@ -57,7 +57,7 @@ public class UserRepositoryImpl implements UserRepository {
             //
             Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from m_users");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from user");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             List<User> users = new ArrayList<>();
