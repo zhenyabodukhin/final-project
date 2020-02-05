@@ -8,20 +8,22 @@ import java.util.Objects;
 
 public class User {
     private Long id;
-    private String firstName;
-    private String lastName;
-    private Date birthDate;
-    private Double weight;
+    private String login;
+    private String password;
+    private Date created;
+    private Date changed;
+    private boolean is_deleted;
 
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, Date birthDate, Double weight) {
+    public User(Long id, String login, String password, Date created, Date changed, Boolean is_deleted) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.weight = weight;
+        this.login = login;
+        this.password = password;
+        this.created = created;
+        this.changed = changed;
+        this.is_deleted = is_deleted;
     }
 
     public Long getId() {
@@ -32,37 +34,46 @@ public class User {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getLogin() {
+        return login;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getPassword() {
+        return password;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    public Date getCreated() {
+        return created;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setCreated(Date created) {
+        this.created = created;
     }
 
-    public Double getWeight() {
-        return weight;
+    public Date getChanged() {
+        return changed;
     }
 
-    public void setWeight(Double weight) {
-        this.weight = weight;
+    public void setChanged(Date changed) {
+        this.changed = changed;
     }
+
+    public boolean isIs_deleted() {
+        return is_deleted;
+    }
+
+    public void setIs_deleted(boolean is_deleted) {
+        this.is_deleted = is_deleted;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -70,15 +81,16 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return Objects.equals(id, user.id) &&
-                Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName) &&
-                Objects.equals(birthDate, user.birthDate) &&
-                Objects.equals(weight, user.weight);
+                Objects.equals(login, user.login) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(created, user.created) &&
+                Objects.equals(changed, user.changed) &&
+                Objects.equals(is_deleted, user.is_deleted);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, birthDate, weight);
+        return Objects.hash(id, login, password, created, changed, is_deleted);
     }
 
     @Override

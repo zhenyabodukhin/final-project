@@ -1,8 +1,9 @@
 package com.htp.dao;
 
 import com.htp.domain.User;
-import com.htp.util.DatabasePropertiesUtil;
+
 import org.apache.commons.dbcp2.BasicDataSource;
+
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -17,7 +18,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     private DataSource dataSource;
 
-    public static final String url = "jdbc:postgresql://localhost:5432/postgres";
+    public static final String url = "jdbc:postgresql://localhost:5432/project_pizza";
     public static final String username = "postgres";
     public static final String password = "root";
     public static final int initialSize = 10;
@@ -39,13 +40,15 @@ public class UserRepositoryImpl implements UserRepository {
         return 0;
     }
 
+
     private User fillObject(ResultSet set) throws SQLException {
         User user = new User();
-        user.setId(set.getLong(1));
-        user.setFirstName(set.getString(2));
-        user.setLastName(set.getString(3));
-        user.setBirthDate(set.getDate(4));
-        user.setWeight(set.getDouble(5));
+        user.setId(set.getLong("id"));
+        user.setLogin(set.getString("login"));
+        user.setPassword(set.getString("password"));
+        user.setCreated(set.getDate("created"));
+        user.setChanged(set.getDate("changed"));
+        user.setIs_deleted(set.getBoolean("is_deleted"));
         return user;
     }
 
@@ -57,7 +60,7 @@ public class UserRepositoryImpl implements UserRepository {
             //
             Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from user");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from m_users");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             List<User> users = new ArrayList<>();

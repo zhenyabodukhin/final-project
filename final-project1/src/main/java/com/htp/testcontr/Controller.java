@@ -35,9 +35,6 @@ public class Controller extends  HttpServlet {
             userID = Long.valueOf(split[1]);
 
         }
-
-
-
         System.out.println(repository.findAll());
     }
 
