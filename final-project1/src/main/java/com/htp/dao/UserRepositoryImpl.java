@@ -1,10 +1,7 @@
 package com.htp.dao;
 
 import com.htp.domain.User;
-
 import org.apache.commons.dbcp2.BasicDataSource;
-
-
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
