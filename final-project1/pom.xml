@@ -29,6 +29,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                <webXml>src/main/webapps/WEB-INF/web.xml</webXml>
+                </configuration>
                 <version>3.2.3</version>
             </plugin>
         </plugins>
