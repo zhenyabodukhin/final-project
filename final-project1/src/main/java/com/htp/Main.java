@@ -1,7 +1,7 @@
-package com.htp.testcontr;
+package com.htp;
 
 import com.htp.dao.UserRepository;
-import com.htp.dao.UserRepositoryImpl;
+import com.htp.dao.impl.UserRepositoryImpl;
 
 public class Main {
     public static void main(String[] args) {

@@ -1,12 +1,14 @@
 package com.htp.dao;
 
-import com.htp.domain.User;
-
 import java.util.List;
 
-public interface UserRepository {
-    int save(User user);
-    List<User> findAll();
-    int update(User user);
-    void delete(Long userId);
+public interface UserRepository<T, K> {
+
+    List<T> findAll();
+
+    T save(T entity);
+
+    T update(T entity);
+
+    void delete(K id);
 }
