@@ -24,7 +24,7 @@ public class DatabaseConfig {
         dataSource.setPassword(properties.getProperty("password"));
         dataSource.setUrl(properties.getProperty("url"));
         dataSource.setInitialSize(Integer.valueOf(Objects.requireNonNull(properties.getProperty("initialSize"))));
-        dataSource.setUsername(properties.getProperty("username"));
+        dataSource.setUsername(properties.getProperty("user_name"));
         dataSource.setMaxActive(Integer.valueOf(Objects.requireNonNull(properties.getProperty("maxActive"))));
         return dataSource;
     }

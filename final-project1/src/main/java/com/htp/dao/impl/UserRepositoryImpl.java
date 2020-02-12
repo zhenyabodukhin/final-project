@@ -5,20 +5,25 @@ import com.htp.dao.UserRepositoryDao;
 import com.htp.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.List;
 
-@Repository
+@Repository("UserRepositoryImpl")
 public class UserRepositoryImpl implements UserRepositoryDao {
 
     public static final String USER_ID = "id";
-    public static final String USER_NAME = "first_name";
-    public static final String USER_SURNAME = "last_name";
-    public static final String BIRTH_DATE = "birth_date";
-    public static final String WEIGHT = "weight";
+    public static final String USER_NAME = "login";
+    public static final String USER_PASSWORD = "password";
+    public static final String USER_CREATED = "created";
+    public static final String USER_CHANGED = "changed";
+    public static final String IS_DELETED = "is_deleted";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -31,14 +36,14 @@ public class UserRepositoryImpl implements UserRepositoryDao {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
-    private User getUserRowMapper(ResultSet set) throws SQLException {
+    private User getUserRowMapper(ResultSet set, int i) throws SQLException {
         User user = new User();
-        user.setId(set.getLong("id"));
-        user.setLogin(set.getString("login"));
-        user.setPassword(set.getString("password"));
-        user.setCreated(set.getDate("created"));
-        user.setChanged(set.getDate("changed"));
-        user.setIs_deleted(set.getBoolean("is_deleted"));
+        user.setId(set.getLong(USER_ID));
+        user.setLogin(set.getString(USER_NAME));
+        user.setPassword(set.getString(USER_PASSWORD));
+        user.setCreated(set.getDate(USER_CREATED));
+        user.setChanged(set.getDate(USER_CHANGED));
+        user.setIs_deleted(set.getBoolean(IS_DELETED));
         return user;
     }
 
@@ -46,28 +51,78 @@ public class UserRepositoryImpl implements UserRepositoryDao {
     @Override
     public List<User> findAll() {
         final String findAllQuery = "select * from m_users";
-        return null; //namedParameterJdbcTemplate.query(findAllQuery, this::getUserRowMapper);
+        return namedParameterJdbcTemplate.query(findAllQuery, this::getUserRowMapper);
     }
 
     @Override
     public User save(User entity) {
+        final String createQuery = "INSERT INTO m_users (login, password)" +
+                "VALUES (:userName, :userPassword);";
 
-        return null;
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("userName", entity.getLogin());
+        params.addValue("userPassword", entity.getPassword());
+
+        namedParameterJdbcTemplate.update(createQuery, params, keyHolder);
+
+        //long createdUserId = Objects.requireNonNull(keyHolder.getKey().longValue());
+
+        User createdUser = findByName(entity.getLogin());
+
+        return findById(createdUser.getId());
     }
 
 
+    @Override
+    public void delete(Long id) {
+
+        final String delete = "UPDATE m_users set is_deleted = true where id = :userId";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("userId", id);
+
+        namedParameterJdbcTemplate.update(delete, params);
+
+    }
+
+    @Override
+    public User findById(Long id) {
+
+        final String findById = "select * from m_users where id = :userId";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("userId", id);
+
+        return namedParameterJdbcTemplate.queryForObject(findById, params, this::getUserRowMapper);
+    }
+
+    @Override
+    public User findByName(String name) {
+
+        final String findByName = "select * from m_users where login = :userName";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("userName", name);
+
+        return namedParameterJdbcTemplate.queryForObject(findByName, params, this::getUserRowMapper);
+    }
+
+    //TODO разобраться, что должен делать этот метод
+    @Override
+    public List<Long> batchUpdate(List<User> users) {return null;}
+
+    //TODO добавить время изменения
     @Override
     public User update(User entity) {
-        return null;
-    }
+        final String createQuery = "UPDATE m_users set login = :userName, password = :userPassword, where id = :userId";
 
-    @Override
-    public void delete(Long userId) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("userName", entity.getLogin());
+        params.addValue("userSurname", entity.getPassword());
 
-    }
-
-    @Override
-    public List<Long> batchUpdate(List<User> users) {
-        return null;
+        namedParameterJdbcTemplate.update(createQuery, params);
+        return findById(entity.getId());
     }
 }

@@ -26,6 +26,11 @@ public class User {
         this.is_deleted = is_deleted;
     }
 
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
     public Long getId() {
         return id;
     }

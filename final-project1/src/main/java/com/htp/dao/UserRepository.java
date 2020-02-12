@@ -1,5 +1,7 @@
 package com.htp.dao;
 
+import com.htp.domain.User;
+
 import java.util.List;
 
 public interface UserRepository<T, K> {
@@ -11,4 +13,8 @@ public interface UserRepository<T, K> {
     T update(T entity);
 
     void delete(K id);
+
+    User findById(K id);
+
+    User findByName (String name);
 }
