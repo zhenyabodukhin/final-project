@@ -64,14 +64,19 @@ public class UserRepositoryImpl implements UserRepositoryDao {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("userName", entity.getLogin());
         params.addValue("userPassword", entity.getPassword());
-
         namedParameterJdbcTemplate.update(createQuery, params, keyHolder);
+
+        final String createQueryForRole = "INSERT INTO m_roles (user_name, user_id)" +
+                "VALUES (:userName, :createdUserId);";
+
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("userName", entity.getLogin());
+        parameterSource.addValue("createdUserId", findByName(entity.getLogin()).getId());
+        namedParameterJdbcTemplate.update(createQueryForRole, parameterSource, keyHolder);
 
         //long createdUserId = Objects.requireNonNull(keyHolder.getKey().longValue());
 
-        User createdUser = findByName(entity.getLogin());
-
-        return findById(createdUser.getId());
+        return findById(findByName(entity.getLogin()).getId());
     }
 
 

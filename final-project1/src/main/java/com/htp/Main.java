@@ -21,10 +21,10 @@ public class Main {
         System.out.println("Метод findById");
         System.out.println(userRepositoryDao.findById(1L));
 
-//        System.out.println("Метод save");
-//        User user = new User("koipman", "hun266");
-//        System.out.println("Метод save прошел успешно, возвращаю User'a");
-//        System.out.println(userRepositoryDao.save(user));
+        System.out.println("Метод save");
+        User user = new User("VasiaPivo", "Pivo23");
+        System.out.println("Метод save прошел успешно, возвращаю User'a");
+        System.out.println(userRepositoryDao.save(user));
 
         System.out.println("Метод delete");
         userRepositoryDao.delete(1L);
