@@ -56,23 +56,23 @@ public class UserRepositoryImpl implements UserRepositoryDao {
 
     @Override
     public User save(User entity) {
-        final String createQuery = "INSERT INTO m_users (login, password)" +
+        final String createQueryForUsers = "INSERT INTO m_users (login, password)" +
                 "VALUES (:userName, :userPassword);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("userName", entity.getLogin());
-        params.addValue("userPassword", entity.getPassword());
-        namedParameterJdbcTemplate.update(createQuery, params, keyHolder);
+        MapSqlParameterSource paramsForUsers = new MapSqlParameterSource();
+        paramsForUsers.addValue("userName", entity.getLogin());
+        paramsForUsers.addValue("userPassword", entity.getPassword());
+        namedParameterJdbcTemplate.update(createQueryForUsers, paramsForUsers, keyHolder);
 
         final String createQueryForRole = "INSERT INTO m_roles (user_name, user_id)" +
                 "VALUES (:userName, :createdUserId);";
 
-        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-        parameterSource.addValue("userName", entity.getLogin());
-        parameterSource.addValue("createdUserId", findByName(entity.getLogin()).getId());
-        namedParameterJdbcTemplate.update(createQueryForRole, parameterSource, keyHolder);
+        MapSqlParameterSource paramsForRole= new MapSqlParameterSource();
+        paramsForRole.addValue("userName", entity.getLogin());
+        paramsForRole.addValue("createdUserId", findByName(entity.getLogin()).getId());
+        namedParameterJdbcTemplate.update(createQueryForRole, paramsForRole, keyHolder);
 
         //long createdUserId = Objects.requireNonNull(keyHolder.getKey().longValue());
 
