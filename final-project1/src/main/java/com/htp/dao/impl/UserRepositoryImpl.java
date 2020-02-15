@@ -28,7 +28,6 @@ public class UserRepositoryImpl implements UserRepositoryDao {
     public static final String IS_DELETED = "is_deleted";
 
     private JdbcTemplate jdbcTemplate;
-
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
@@ -74,9 +73,9 @@ public class UserRepositoryImpl implements UserRepositoryDao {
         MapSqlParameterSource paramsForRole= new MapSqlParameterSource();
         paramsForRole.addValue("userName", entity.getLogin());
         paramsForRole.addValue("createdUserId", findByName(entity.getLogin()).getId());
-        namedParameterJdbcTemplate.update(createQueryForRole, paramsForRole, keyHolder);
+        namedParameterJdbcTemplate.update(createQueryForRole, paramsForRole, keyHolder, new String[] { "id" });
 
-        return findById(findByName(entity.getLogin()).getId());
+        return findById(keyHolder.getKey().longValue());
     }
 
 
@@ -136,7 +135,7 @@ public class UserRepositoryImpl implements UserRepositoryDao {
         params.addValue("userPassword", entity.getPassword());
         params.addValue("userCreated", entity.getCreated());
         params.addValue("changed", new Timestamp(new Date().getTime()));
-        params.addValue("deleted", entity.isIs_deleted());
+        params.addValue("deleted", entity.getIs_deleted());
 
         namedParameterJdbcTemplate.update(createQuery, params);
         return findById(entity.getId());

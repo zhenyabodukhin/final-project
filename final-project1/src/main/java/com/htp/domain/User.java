@@ -3,7 +3,7 @@ package com.htp.domain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.sql.Date;
+
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -72,7 +72,7 @@ public class User {
         this.changed = changed;
     }
 
-    public boolean isIs_deleted() {
+    public boolean getIs_deleted() {
         return is_deleted;
     }
 
