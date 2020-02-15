@@ -4,20 +4,21 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class User {
     private Long id;
     private String login;
     private String password;
-    private Date created;
-    private Date changed;
+    private Timestamp created;
+    private Timestamp changed;
     private boolean is_deleted;
 
     public User() {
     }
 
-    public User(Long id, String login, String password, Date created, Date changed, Boolean is_deleted) {
+    public User(Long id, String login, String password, Timestamp created, Timestamp changed, Boolean is_deleted) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -55,19 +56,19 @@ public class User {
         this.password = password;
     }
 
-    public Date getCreated() {
+    public Timestamp getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(Timestamp created) {
         this.created = created;
     }
 
-    public Date getChanged() {
+    public Timestamp getChanged() {
         return changed;
     }
 
-    public void setChanged(Date changed) {
+    public void setChanged(Timestamp changed) {
         this.changed = changed;
     }
 

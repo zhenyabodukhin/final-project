@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Repository("UserRepositoryImpl")
@@ -41,8 +43,8 @@ public class UserRepositoryImpl implements UserRepositoryDao {
         user.setId(set.getLong(USER_ID));
         user.setLogin(set.getString(USER_NAME));
         user.setPassword(set.getString(USER_PASSWORD));
-        user.setCreated(set.getDate(USER_CREATED));
-        user.setChanged(set.getDate(USER_CHANGED));
+        user.setCreated(set.getTimestamp(USER_CREATED));
+        user.setChanged(set.getTimestamp(USER_CHANGED));
         user.setIs_deleted(set.getBoolean(IS_DELETED));
         return user;
     }
@@ -114,20 +116,25 @@ public class UserRepositoryImpl implements UserRepositoryDao {
         return namedParameterJdbcTemplate.queryForObject(findByName, params, this::getUserRowMapper);
     }
 
-    //TODO разобраться, что должен делать этот метод
-    @Override
-    public List<Long> batchUpdate(List<User> users) {return null;}
 
-    //TODO добавить время изменения
+
     @Override
     public User update(User entity) {
-        final String createQuery = "UPDATE m_users set login = :userName, password = :userPassword, where id = :userId";
+        final String createQuery = "UPDATE m_users set login = :userName, password = :userPassword," +
+                " created = :userCreated, changed = :changed, is_deleted = :deleted where id = :userId";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("userId", entity.getId());
         params.addValue("userName", entity.getLogin());
-        params.addValue("userSurname", entity.getPassword());
+        params.addValue("userPassword", entity.getPassword());
+        params.addValue("userCreated", entity.getCreated());
+        params.addValue("changed", new Timestamp(new Date().getTime()));
+        params.addValue("deleted", entity.isIs_deleted());
 
         namedParameterJdbcTemplate.update(createQuery, params);
         return findById(entity.getId());
     }
+
+    @Override
+    public List<Long> batchUpdate(List<User> users) {return null;}
 }
