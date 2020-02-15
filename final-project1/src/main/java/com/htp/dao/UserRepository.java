@@ -17,4 +17,6 @@ public interface UserRepository<T, K> {
     User findById(K id);
 
     User findByName (String name);
+
+    List<T> findIsDeleted (boolean value);
 }

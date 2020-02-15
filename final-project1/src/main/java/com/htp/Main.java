@@ -24,6 +24,12 @@ public class Main {
         System.out.println("Метод findById");
         System.out.println(userRepositoryDao.findById(1L));
 
+        System.out.println("Метод findByName");
+        System.out.println(userRepositoryDao.findByName("Mark"));
+
+        System.out.println("Метод findIsDeleted");
+        System.out.println(userRepositoryDao.findIsDeleted(true));
+
 //        System.out.println("Метод save");
 //        User user = new User("VasiaPivo12", "Pivo2223");
 //        System.out.println("Метод save прошел успешно, возвращаю User'a");
@@ -33,14 +39,12 @@ public class Main {
 //        userRepositoryDao.delete(1L);
 
 
-        System.out.println("Метод findByName");
-        System.out.println(userRepositoryDao.findByName("Mark"));
 
-        System.out.println("Метод update");
-        User secondUser = new User(1L, "Zhenya", "juhg",
-                userRepositoryDao.findById(1L).getCreated(),
-                new Timestamp(new Date().getTime()), false);
-        System.out.println(userRepositoryDao.update(secondUser));
+//        System.out.println("Метод update");
+//        User secondUser = new User(1L, "Zhenya", "juhg",
+//                userRepositoryDao.findById(1L).getCreated(),
+//                new Timestamp(new Date().getTime()), false);
+//        System.out.println(userRepositoryDao.update(secondUser));
 
     }
 }

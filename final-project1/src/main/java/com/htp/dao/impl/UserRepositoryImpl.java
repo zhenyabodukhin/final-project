@@ -76,8 +76,6 @@ public class UserRepositoryImpl implements UserRepositoryDao {
         paramsForRole.addValue("createdUserId", findByName(entity.getLogin()).getId());
         namedParameterJdbcTemplate.update(createQueryForRole, paramsForRole, keyHolder);
 
-        //long createdUserId = Objects.requireNonNull(keyHolder.getKey().longValue());
-
         return findById(findByName(entity.getLogin()).getId());
     }
 
@@ -116,6 +114,15 @@ public class UserRepositoryImpl implements UserRepositoryDao {
         return namedParameterJdbcTemplate.queryForObject(findByName, params, this::getUserRowMapper);
     }
 
+    @Override
+    public List<User> findIsDeleted(boolean value) {
+        final String findIsDeleted = "select * from m_users where is_deleted = :isDeleted";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("isDeleted", value);
+
+        return namedParameterJdbcTemplate.query(findIsDeleted, params, this::getUserRowMapper);
+    }
 
 
     @Override
