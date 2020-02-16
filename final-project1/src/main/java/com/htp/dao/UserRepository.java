@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserRepository<T, K> {
 
-    List<T> findAll();
+    List<T> findAll(int limit, int offset);
 
     T save(T entity);
 
@@ -17,6 +17,8 @@ public interface UserRepository<T, K> {
     User findById(K id);
 
     User findByName (String name);
+
+    List<T> findContainsValue (String value);
 
     List<T> findIsDeleted (boolean value);
 }

@@ -28,7 +28,7 @@
     <properties>
         <lombok.version>1.18.10</lombok.version>
         <commons.lang.version>3.9</commons.lang.version>
-        <aspectj.version>1.6.11</aspectj.version>
+        <aspectj.version>1.7.0</aspectj.version>
         <dbcp-version>1.4</dbcp-version>
         <log4j>1.2.17</log4j>
         <mysql.version>8.0.13</mysql.version>
@@ -125,6 +125,12 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j}</version>
         </dependency>
         
     </dependencies>

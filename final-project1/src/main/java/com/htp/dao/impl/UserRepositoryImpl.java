@@ -3,6 +3,7 @@ package com.htp.dao.impl;
 
 import com.htp.dao.UserRepositoryDao;
 import com.htp.domain.User;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -48,11 +49,14 @@ public class UserRepositoryImpl implements UserRepositoryDao {
         return user;
     }
 
-
     @Override
-    public List<User> findAll() {
-        final String findAllQuery = "select * from m_users";
-        return namedParameterJdbcTemplate.query(findAllQuery, this::getUserRowMapper);
+    public List<User> findAll(int limit, int offset) {
+        final String findAllQuery = "select * from m_users limit :limitValues offset :offsetValues";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("limitValues", limit);
+        params.addValue("offsetValues", offset);
+        return namedParameterJdbcTemplate.query(findAllQuery, params, this::getUserRowMapper);
     }
 
     @Override
@@ -111,6 +115,16 @@ public class UserRepositoryImpl implements UserRepositoryDao {
         params.addValue("userName", name);
 
         return namedParameterJdbcTemplate.queryForObject(findByName, params, this::getUserRowMapper);
+    }
+
+    @Override
+    public List<User> findContainsValue(String value) {
+        final String findContainsValue = "select * from m_users where login like :value";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("value", value);
+
+        return namedParameterJdbcTemplate.query(findContainsValue, params, this::getUserRowMapper);
     }
 
     @Override
