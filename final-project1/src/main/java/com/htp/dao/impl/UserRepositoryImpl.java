@@ -3,7 +3,6 @@ package com.htp.dao.impl;
 
 import com.htp.dao.UserRepositoryDao;
 import com.htp.domain.User;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
