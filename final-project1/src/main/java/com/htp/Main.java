@@ -1,5 +1,6 @@
 package com.htp;
 
+import com.htp.aspect.MethodCallCounter;
 import com.htp.config.AppConfig;
 import com.htp.dao.OrderRepositoryDao;
 import com.htp.dao.UserRepositoryDao;
@@ -16,7 +17,10 @@ import java.util.Date;
 public class Main {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+
         UserRepositoryDao userRepositoryDao = (UserRepositoryDao) context.getBean("UserRepositoryImpl");
+        MethodCallCounter methodCallCounter = (MethodCallCounter) context.getBean("MethodCallCounter");
+
         OrderRepositoryDao orderRepositoryDao = (OrderRepositoryDao) context.getBean("OrderRepositoryImpl");
 
         System.out.println("Метод User findAll");
@@ -82,6 +86,9 @@ public class Main {
 //
 //        System.out.println("Метод Order findIsDone");
 //        System.out.println(orderRepositoryDao.findIsDone(true));
+
+        System.out.println("Aspect: Map of method-counter");
+        System.out.println(methodCallCounter.getMethodCounter());
 
     }
 }
