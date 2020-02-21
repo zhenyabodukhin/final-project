@@ -4,10 +4,21 @@ import com.htp.domain.User;
 
 import java.util.List;
 
-public interface UserRepository {
-    int save(User user);
-    List<User> findAll();
-    User findOne(Long userId);
-    int update(User user);
-    void delete(Long userId);
+public interface UserRepository<T, K> {
+
+    List<T> findAll(int limit, int offset);
+
+    T save(T entity);
+
+    T update(T entity);
+
+    void delete(K id);
+
+    User findById(K id);
+
+    User findByName (String name);
+
+    List<T> findContainsValue (String value);
+
+    List<T> findIsDeleted (boolean value);
 }
