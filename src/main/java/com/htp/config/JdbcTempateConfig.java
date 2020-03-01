@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 @Configuration
-@ComponentScan("com.htp")
 public class JdbcTempateConfig {
 
     @Autowired
@@ -19,12 +18,18 @@ public class JdbcTempateConfig {
     private BasicDataSource dataSource;
 
     @Bean("jdbcTemplate")
-    public JdbcTemplate getJdbcTemplate() { return new JdbcTemplate(dataSource); }
+    public JdbcTemplate getJdbcTemplate() {
+        return new JdbcTemplate(dataSource);
+    }
 
     @Bean("namedJdbcTemplate")
-    public NamedParameterJdbcTemplate getNamedJdbcTemplate() { return new NamedParameterJdbcTemplate(dataSource); }
+    public NamedParameterJdbcTemplate getNamedJdbcTemplate() {
+        return new NamedParameterJdbcTemplate(dataSource);
+    }
 
-    @Bean
-    public DataSourceTransactionManager getTransactionManager() { return new DataSourceTransactionManager(dataSource); }
+    @Bean("txManager")
+    public DataSourceTransactionManager getTransactionManager() {
+        return new DataSourceTransactionManager(dataSource);
+    }
 
 }

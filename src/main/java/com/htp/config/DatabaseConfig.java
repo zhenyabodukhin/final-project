@@ -1,31 +1,45 @@
 package com.htp.config;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.commons.dbcp.BasicDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.Scope;
-import org.springframework.core.env.Environment;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.*;
+
 
 import java.util.Objects;
 
+@Setter
+@Getter
+@NoArgsConstructor
 @Configuration
-@PropertySource("classpath:database.properties")
+@ConfigurationProperties("datasource")
 public class DatabaseConfig {
 
-    @Autowired
-    private Environment properties;
+    private String driverName;
+
+    private String url;
+
+    private String login;
+
+    private String password;
+
+    private String initialSize;
+
+    private String maxActive;
 
     @Bean(value = "dataSource", destroyMethod = "close")
     @Scope("singleton")
-    public BasicDataSource getDataSource(){
+    @Primary
+    public BasicDataSource getDatasource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setPassword(properties.getProperty("password"));
-        dataSource.setUrl(properties.getProperty("url"));
-        dataSource.setInitialSize(Integer.valueOf(Objects.requireNonNull(properties.getProperty("initialSize"))));
-        dataSource.setUsername(properties.getProperty("user_name"));
-        dataSource.setMaxActive(Integer.valueOf(Objects.requireNonNull(properties.getProperty("maxActive"))));
+        dataSource.setDriverClassName(driverName);
+        dataSource.setPassword(password);
+        dataSource.setUrl(url);
+        dataSource.setInitialSize(Integer.valueOf(Objects.requireNonNull(initialSize)));
+        dataSource.setUsername(login);
+        dataSource.setMaxActive(Integer.valueOf(Objects.requireNonNull(maxActive)));
         return dataSource;
     }
 }

@@ -17,16 +17,15 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Repository("OrderRepositoryImpl")
 public class OrderRepositoryImpl implements OrderRepositoryDao {
 
     public static final String ORDER_ID = "id";
-    public static final String USER_ID = "user_id";
-    public static final String ADRESS_ID = "adress_id";
+    public static final String USER_ID = "userId";
+    public static final String ADRESS_ID = "adressId";
     public static final String ORDER_TIME = "time";
-    public static final String IS_DONE = "is_done";
+    public static final String IS_DONE = "isDone";
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -41,10 +40,10 @@ public class OrderRepositoryImpl implements OrderRepositoryDao {
     private Order getOrderRowMapper(ResultSet set, int i) throws SQLException {
         Order order = new Order();
         order.setId(set.getLong(ORDER_ID));
-        order.setUser_id(set.getLong(USER_ID));
-        order.setAdress_id(set.getLong(ADRESS_ID));
+        order.setUserId(set.getLong(USER_ID));
+        order.setAdressId(set.getLong(ADRESS_ID));
         order.setTime(set.getTimestamp(ORDER_TIME));
-        order.setIs_done(set.getBoolean(IS_DONE));
+        order.setDone(set.getBoolean(IS_DONE));
         return order;
     }
 
@@ -62,8 +61,8 @@ public class OrderRepositoryImpl implements OrderRepositoryDao {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         MapSqlParameterSource paramsForUsers = new MapSqlParameterSource();
-        paramsForUsers.addValue("userId", entity.getUser_id());
-        paramsForUsers.addValue("adressId", entity.getAdress_id());
+        paramsForUsers.addValue("userId", entity.getUserId());
+        paramsForUsers.addValue("adressId", entity.getAdressId());
         namedParameterJdbcTemplate.update(createQueryForOrders, paramsForUsers, keyHolder, new String[] { "id" });
 
         return findById(keyHolder.getKey().longValue());
@@ -76,10 +75,10 @@ public class OrderRepositoryImpl implements OrderRepositoryDao {
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("orderId", entity.getId());
-        params.addValue("userId", entity.getUser_id());
-        params.addValue("adressId", entity.getAdress_id());
+        params.addValue("userId", entity.getUserId());
+        params.addValue("adressId", entity.getAdressId());
         params.addValue("orderTime", new Timestamp(new Date().getTime()));
-        params.addValue("isDone", entity.getIs_done());
+        params.addValue("isDone", entity.isDone());
 
         namedParameterJdbcTemplate.update(createQuery, params);
         return findById(entity.getId());

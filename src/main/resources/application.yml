@@ -1,0 +1,6 @@
+datasource:
+  url: jdbc:postgresql://localhost:5432/project_pizza
+  login: postgres
+  password: root
+  initialSize: 10
+  maxActive: 7

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -14,8 +15,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository("UserRepositoryImpl")
 public class UserRepositoryImpl implements UserRepositoryDao {
@@ -25,7 +28,7 @@ public class UserRepositoryImpl implements UserRepositoryDao {
     public static final String USER_PASSWORD = "password";
     public static final String USER_CREATED = "created";
     public static final String USER_CHANGED = "changed";
-    public static final String IS_DELETED = "is_deleted";
+    public static final String IS_DELETED = "isDeleted";
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -44,18 +47,14 @@ public class UserRepositoryImpl implements UserRepositoryDao {
         user.setPassword(set.getString(USER_PASSWORD));
         user.setCreated(set.getTimestamp(USER_CREATED));
         user.setChanged(set.getTimestamp(USER_CHANGED));
-        user.setIs_deleted(set.getBoolean(IS_DELETED));
+        user.setDeleted(set.getBoolean(IS_DELETED));
         return user;
     }
 
     @Override
-    public List<User> findAll(int limit, int offset) {
-        final String findAllQuery = "select * from m_users limit :limitValues offset :offsetValues";
-
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("limitValues", limit);
-        params.addValue("offsetValues", offset);
-        return namedParameterJdbcTemplate.query(findAllQuery, params, this::getUserRowMapper);
+    public List<User> findAll() {
+        final String findAllQuery = "select * from m_users";
+        return namedParameterJdbcTemplate.query(findAllQuery, this::getUserRowMapper);
     }
 
     @Override
@@ -148,12 +147,30 @@ public class UserRepositoryImpl implements UserRepositoryDao {
         params.addValue("userPassword", entity.getPassword());
         params.addValue("userCreated", entity.getCreated());
         params.addValue("changed", new Timestamp(new Date().getTime()));
-        params.addValue("deleted", entity.getIs_deleted());
+        params.addValue("deleted", entity.isDeleted());
 
         namedParameterJdbcTemplate.update(createQuery, params);
         return findById(entity.getId());
     }
 
     @Override
-    public List<Long> batchUpdate(List<User> users) {return null;}
+    public List<Long> batchUpdate(List<User> users) {
+        final String createQuery = "UPDATE m_users set login = :userName, password = :userPassword," +
+                " created = :userCreated, changed = :changed, is_deleted = :deleted where id = :userId";
+
+        List<SqlParameterSource> batch = new ArrayList<>();
+        for (User user : users) {
+            MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("userId", user.getId());
+            params.addValue("userName", user.getLogin());
+            params.addValue("userPassword", user.getPassword());
+            params.addValue("userCreated", user.getCreated());
+            params.addValue("changed", new Timestamp(new Date().getTime()));
+            params.addValue("deleted", user.isDeleted());
+            batch.add(params);
+        }
+
+        namedParameterJdbcTemplate.batchUpdate(createQuery, batch.toArray(new SqlParameterSource[batch.size()]));
+        return users.stream().map(User::getId).collect(Collectors.toList());
+    }
 }
