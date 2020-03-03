@@ -3,6 +3,7 @@ package com.htp.dao.impl;
 
 import com.htp.dao.UserRepositoryDao;
 import com.htp.domain.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository("UserRepositoryImpl")
+@RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepositoryDao {
 
     public static final String USER_ID = "id";
@@ -28,7 +30,7 @@ public class UserRepositoryImpl implements UserRepositoryDao {
     public static final String USER_PASSWORD = "password";
     public static final String USER_CREATED = "created";
     public static final String USER_CHANGED = "changed";
-    public static final String IS_DELETED = "isDeleted";
+    public static final String IS_DELETED = "is_deleted";
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -60,20 +62,20 @@ public class UserRepositoryImpl implements UserRepositoryDao {
     @Override
     public User save(User entity) {
         final String createQueryForUsers = "INSERT INTO m_users (login, password)" +
-                "VALUES (:userName, :userPassword);";
+                "VALUES (:login, :password);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         MapSqlParameterSource paramsForUsers = new MapSqlParameterSource();
-        paramsForUsers.addValue("userName", entity.getLogin());
-        paramsForUsers.addValue("userPassword", entity.getPassword());
-        namedParameterJdbcTemplate.update(createQueryForUsers, paramsForUsers, keyHolder);
+        paramsForUsers.addValue(USER_NAME, entity.getLogin());
+        paramsForUsers.addValue(USER_PASSWORD, entity.getPassword());
+        namedParameterJdbcTemplate.update(createQueryForUsers, paramsForUsers, keyHolder, new String[] { "id" });
 
         final String createQueryForRole = "INSERT INTO m_roles (user_name, user_id)" +
-                "VALUES (:userName, :createdUserId);";
+                "VALUES (:login, :createdUserId);";
 
         MapSqlParameterSource paramsForRole= new MapSqlParameterSource();
-        paramsForRole.addValue("userName", entity.getLogin());
+        paramsForRole.addValue(USER_NAME, entity.getLogin());
         paramsForRole.addValue("createdUserId", findByName(entity.getLogin()).getId());
         namedParameterJdbcTemplate.update(createQueryForRole, paramsForRole, keyHolder, new String[] { "id" });
 
@@ -84,10 +86,10 @@ public class UserRepositoryImpl implements UserRepositoryDao {
     @Override
     public void delete(Long id) {
 
-        final String delete = "UPDATE m_users set is_deleted = true where id = :userId";
+        final String delete = "UPDATE m_users set is_deleted = true where id = :id";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("userId", id);
+        params.addValue(USER_ID, id);
 
         namedParameterJdbcTemplate.update(delete, params);
 
@@ -96,10 +98,10 @@ public class UserRepositoryImpl implements UserRepositoryDao {
     @Override
     public User findById(Long id) {
 
-        final String findById = "select * from m_users where id = :userId";
+        final String findById = "select * from m_users where id = :id";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("userId", id);
+        params.addValue(USER_ID, id);
 
         return namedParameterJdbcTemplate.queryForObject(findById, params, this::getUserRowMapper);
     }
@@ -107,10 +109,10 @@ public class UserRepositoryImpl implements UserRepositoryDao {
     @Override
     public User findByName(String name) {
 
-        final String findByName = "select * from m_users where login = :userName";
+        final String findByName = "select * from m_users where login = :login";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("userName", name);
+        params.addValue(USER_NAME, name);
 
         return namedParameterJdbcTemplate.queryForObject(findByName, params, this::getUserRowMapper);
     }
@@ -127,10 +129,10 @@ public class UserRepositoryImpl implements UserRepositoryDao {
 
     @Override
     public List<User> findIsDeleted(boolean value) {
-        final String findIsDeleted = "select * from m_users where is_deleted = :isDeleted";
+        final String findIsDeleted = "select * from m_users where is_deleted = :is_deleted";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("isDeleted", value);
+        params.addValue(IS_DELETED, value);
 
         return namedParameterJdbcTemplate.query(findIsDeleted, params, this::getUserRowMapper);
     }
@@ -138,16 +140,16 @@ public class UserRepositoryImpl implements UserRepositoryDao {
 
     @Override
     public User update(User entity) {
-        final String createQuery = "UPDATE m_users set login = :userName, password = :userPassword," +
-                " created = :userCreated, changed = :changed, is_deleted = :deleted where id = :userId";
+        final String createQuery = "UPDATE m_users set login = :login, password = :password," +
+                " created = :created, changed = :changed, is_deleted = :is_deleted where id = :id";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("userId", entity.getId());
-        params.addValue("userName", entity.getLogin());
-        params.addValue("userPassword", entity.getPassword());
-        params.addValue("userCreated", entity.getCreated());
-        params.addValue("changed", new Timestamp(new Date().getTime()));
-        params.addValue("deleted", entity.isDeleted());
+        params.addValue(USER_ID, entity.getId());
+        params.addValue(USER_NAME, entity.getLogin());
+        params.addValue(USER_PASSWORD, entity.getPassword());
+        params.addValue(USER_CREATED, entity.getCreated());
+        params.addValue(USER_CHANGED, new Timestamp(new Date().getTime()));
+        params.addValue(IS_DELETED, entity.isDeleted());
 
         namedParameterJdbcTemplate.update(createQuery, params);
         return findById(entity.getId());
@@ -155,8 +157,8 @@ public class UserRepositoryImpl implements UserRepositoryDao {
 
     @Override
     public List<Long> batchUpdate(List<User> users) {
-        final String createQuery = "UPDATE m_users set login = :userName, password = :userPassword," +
-                " created = :userCreated, changed = :changed, is_deleted = :deleted where id = :userId";
+        final String createQuery = "UPDATE m_users set login = :login, password = :password," +
+                " created = :created, changed = :changed, is_deleted = :is_deleted where id = :id";
 
         List<SqlParameterSource> batch = new ArrayList<>();
         for (User user : users) {
