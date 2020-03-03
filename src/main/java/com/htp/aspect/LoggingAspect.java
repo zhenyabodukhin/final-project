@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class LoggingAspect {
 
     @Autowired
-    MethodCallCounterImpl methodCallCounter;
+    private MethodCallCounterImpl methodCallCounter;
 
 
     @Around("execution(* com.htp.dao.impl.UserRepositoryImpl.*(..))")
