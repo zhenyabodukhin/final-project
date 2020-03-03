@@ -10,6 +10,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan("com.htp")
 @EnableAspectJAutoProxy
 @EnableTransactionManagement(proxyTargetClass = true)
-@Import({DatabaseConfig.class, JdbcTempateConfig.class})
+@Import({DatabaseConfig.class, JdbcTemplateConfig.class})
 public class AppConfig {
 }

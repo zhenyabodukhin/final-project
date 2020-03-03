@@ -11,10 +11,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 @Configuration
-public class JdbcTempateConfig {
+public class JdbcTemplateConfig {
 
     @Autowired
-    @Qualifier("dataSource")
     private BasicDataSource dataSource;
 
     @Bean("jdbcTemplate")

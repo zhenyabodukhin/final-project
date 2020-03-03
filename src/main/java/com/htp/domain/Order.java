@@ -24,11 +24,14 @@ public class Order {
 
     private Timestamp time;
 
+    private String phoneNumber;
+
     private boolean isDone;
 
-    public Order(Long userId, Long adressId){
+    public Order(Long userId, Long adressId, String phoneNumber){
         this.userId = userId;
         this.adressId = adressId;
+        this.phoneNumber = phoneNumber;
     }
 
     @Override

@@ -34,12 +34,12 @@ public class DatabaseConfig {
     @Primary
     public BasicDataSource getDatasource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(driverName);
-        dataSource.setPassword(password);
-        dataSource.setUrl(url);
-        dataSource.setInitialSize(Integer.valueOf(Objects.requireNonNull(initialSize)));
-        dataSource.setUsername(login);
-        dataSource.setMaxActive(Integer.valueOf(Objects.requireNonNull(maxActive)));
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setPassword("root");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/project_pizza");
+        dataSource.setInitialSize(Integer.valueOf(Objects.requireNonNull("10")));
+        dataSource.setUsername("postgres");
+        dataSource.setMaxActive(Integer.valueOf(Objects.requireNonNull("7")));
         return dataSource;
     }
 }
