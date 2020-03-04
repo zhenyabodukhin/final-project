@@ -163,12 +163,12 @@ public class UserRepositoryImpl implements UserRepositoryDao {
         List<SqlParameterSource> batch = new ArrayList<>();
         for (User user : users) {
             MapSqlParameterSource params = new MapSqlParameterSource();
-            params.addValue("userId", user.getId());
-            params.addValue("userName", user.getLogin());
-            params.addValue("userPassword", user.getPassword());
-            params.addValue("userCreated", user.getCreated());
-            params.addValue("changed", new Timestamp(new Date().getTime()));
-            params.addValue("deleted", user.isDeleted());
+            params.addValue(USER_ID, user.getId());
+            params.addValue(USER_NAME, user.getLogin());
+            params.addValue(USER_PASSWORD, user.getPassword());
+            params.addValue(USER_CREATED, user.getCreated());
+            params.addValue(USER_CHANGED, new Timestamp(new Date().getTime()));
+            params.addValue(IS_DELETED, user.isDeleted());
             batch.add(params);
         }
 
