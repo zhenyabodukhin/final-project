@@ -38,7 +38,7 @@ public class UserRepositoryImpl implements UserRepositoryDao {
 
     @Autowired
     public UserRepositoryImpl(JdbcTemplate jdbcTemplate,
-                       NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+                              NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
@@ -70,15 +70,15 @@ public class UserRepositoryImpl implements UserRepositoryDao {
         MapSqlParameterSource paramsForUsers = new MapSqlParameterSource();
         paramsForUsers.addValue(USER_NAME, entity.getLogin());
         paramsForUsers.addValue(USER_PASSWORD, entity.getPassword());
-        namedParameterJdbcTemplate.update(createQueryForUsers, paramsForUsers, keyHolder, new String[] { "id" });
+        namedParameterJdbcTemplate.update(createQueryForUsers, paramsForUsers, keyHolder, new String[]{"id"});
 
         final String createQueryForRole = "INSERT INTO m_roles (user_name, user_id)" +
                 "VALUES (:login, :createdUserId);";
 
-        MapSqlParameterSource paramsForRole= new MapSqlParameterSource();
+        MapSqlParameterSource paramsForRole = new MapSqlParameterSource();
         paramsForRole.addValue(USER_NAME, entity.getLogin());
         paramsForRole.addValue("createdUserId", findByName(entity.getLogin()).getId());
-        namedParameterJdbcTemplate.update(createQueryForRole, paramsForRole, keyHolder, new String[] { "id" });
+        namedParameterJdbcTemplate.update(createQueryForRole, paramsForRole, keyHolder, new String[]{"id"});
 
         return findById(keyHolder.getKey().longValue());
     }

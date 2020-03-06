@@ -53,7 +53,7 @@ public class OrderRepositoryImpl implements OrderRepositoryDao {
     }
 
     @Override
-    public List findAll() {
+    public List<Order> findAll() {
         final String findAllQuery = "select * from m_orders";
         return namedParameterJdbcTemplate.query(findAllQuery, this::getOrderRowMapper);
     }
@@ -102,16 +102,6 @@ public class OrderRepositoryImpl implements OrderRepositoryDao {
     }
 
     @Override
-    public void setOrderDone(Long id) {
-        final String setDone = "UPDATE m_orders set is_done = true where id = :id";
-
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue(ORDER_ID, id);
-
-        namedParameterJdbcTemplate.update(setDone, params);
-    }
-
-    @Override
     public Order findById(Long id) {
         final String findById = "select * from m_orders where id = :id";
 
@@ -119,6 +109,16 @@ public class OrderRepositoryImpl implements OrderRepositoryDao {
         params.addValue(ORDER_ID, id);
 
         return namedParameterJdbcTemplate.queryForObject(findById, params, this::getOrderRowMapper);
+    }
+
+    @Override
+    public void setOrderDone(Long id) {
+        final String setDone = "UPDATE m_orders set is_done = true where id = :id";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue(ORDER_ID, id);
+
+        namedParameterJdbcTemplate.update(setDone, params);
     }
 
     @Override

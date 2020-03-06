@@ -15,14 +15,11 @@ public class Role {
 
     private Long id;
 
-    private String userName;
-
     private Long userId;
 
     private String role;
 
-    public Role(String userName, Long userId, String role){
-        this.userName = userName;
+    public Role(Long userId, String role){
         this.userId = userId;
         this.role = role;
     }
