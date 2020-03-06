@@ -3,7 +3,6 @@ package com.htp.dao.impl;
 
 import com.htp.dao.OrderRepositoryDao;
 import com.htp.domain.Order;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -11,6 +10,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -20,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository("OrderRepositoryImpl")
-@RequiredArgsConstructor
+@Transactional
 public class OrderRepositoryImpl implements OrderRepositoryDao {
 
     public static final String ORDER_ID = "id";
