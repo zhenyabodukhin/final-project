@@ -57,7 +57,7 @@ public class GoodRepositoryImpl implements GoodRepositoryDao {
     @Override
     public Good save(Good entity) {
         final String createQueryForGood = "INSERT INTO m_goods (name, good_price, weight, size_id, dough_id)" +
-                "VALUES (:name, :good_price, :weight, :size_id, :doogh_id);";
+                "VALUES (:name, :good_price, :weight, :size_id, :dough_id);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 

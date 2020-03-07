@@ -55,7 +55,7 @@ public class RoleRepositoryImpl implements RoleRepositoryDao {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         MapSqlParameterSource paramsForRole = new MapSqlParameterSource();
-        paramsForRole.addValue(USER_ID, entity.getId());
+        paramsForRole.addValue(USER_ID, entity.getUserId());
         paramsForRole.addValue(ROLE_TYPE, entity.getRole());
         namedParameterJdbcTemplate.update(createQueryForRole, paramsForRole, keyHolder, new String[]{"id"});
 
