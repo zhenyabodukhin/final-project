@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository("AdressRepositoryImpl")
-@Transactional
 public class AdressRepositoryImpl implements AdressRepositoryDao {
 
     public static final String ADRESS_ID = "id";
@@ -56,6 +55,7 @@ public class AdressRepositoryImpl implements AdressRepositoryDao {
     }
 
     @Override
+    @Transactional
     public Adress save(Adress entity) {
         final String createQueryForAdress = "INSERT INTO m_adress (street, n_house, n_flat, is_pizza, n_floor, n_porch)" +
                 "VALUES (:street, :n_house, :n_flat, :is_pizza, :n_floor, :n_porch );";
@@ -75,6 +75,7 @@ public class AdressRepositoryImpl implements AdressRepositoryDao {
     }
 
     @Override
+    @Transactional
     public Adress update(Adress entity) {
         final String createQuery = "UPDATE m_adress set street = :street, n_house = :n_house," +
                 " n_flat = :n_flat, is_pizza = :is_pizza, n_floor = :n_floor, n_porch = :n_porch where id = :id";
@@ -93,6 +94,7 @@ public class AdressRepositoryImpl implements AdressRepositoryDao {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         final String delete = "delete from m_adress where id = :id";
 

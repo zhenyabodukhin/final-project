@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository("DoughTypeRepositoryImpl")
-@Transactional
 public class DoughTypeRepositoryImpl implements DoughTypeRepositoryDao {
 
     public static final String DOUGH_ID = "id";
@@ -48,6 +47,7 @@ public class DoughTypeRepositoryImpl implements DoughTypeRepositoryDao {
     }
 
     @Override
+    @Transactional
     public DoughType save(DoughType entity) {
         final String createQueryForDough = "INSERT INTO m_dough_type (type, dough_price)" +
                 "VALUES (:type, :dough_price);";
@@ -63,6 +63,7 @@ public class DoughTypeRepositoryImpl implements DoughTypeRepositoryDao {
     }
 
     @Override
+    @Transactional
     public DoughType update(DoughType entity) {
         final String createQuery = "UPDATE m_dough_type set type = :type, dough_price = :dough_price where id = :id";
 
@@ -76,6 +77,7 @@ public class DoughTypeRepositoryImpl implements DoughTypeRepositoryDao {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         final String delete = "delete from m_dough_type where id = :id";
 

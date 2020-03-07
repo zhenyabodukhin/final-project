@@ -21,7 +21,6 @@ import java.util.Date;
 import java.util.List;
 
 @Repository("OrderRepositoryImpl")
-@Transactional
 public class OrderRepositoryImpl implements OrderRepositoryDao {
 
     public static final String ORDER_ID = "id";
@@ -59,6 +58,7 @@ public class OrderRepositoryImpl implements OrderRepositoryDao {
     }
 
     @Override
+    @Transactional
     public Order save(Order entity) {
         final String createQueryForOrders = "INSERT INTO m_orders (user_id, adress_id, phone_number)" +
                 "VALUES (:user_id, :adress_id, :phone_number );";
@@ -75,6 +75,7 @@ public class OrderRepositoryImpl implements OrderRepositoryDao {
     }
 
     @Override
+    @Transactional
     public Order update(Order entity) {
         final String createQuery = "UPDATE m_orders set user_id = :user_id, adress_id = :adress_id," +
                 " time = :time, phone_number = :phone_number, is_done = :is_done where id = :id";
@@ -92,6 +93,7 @@ public class OrderRepositoryImpl implements OrderRepositoryDao {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         final String delete = "delete from m_orders where id = :id";
 
@@ -112,6 +114,7 @@ public class OrderRepositoryImpl implements OrderRepositoryDao {
     }
 
     @Override
+    @Transactional
     public void setOrderDone(Long id) {
         final String setDone = "UPDATE m_orders set is_done = true where id = :id";
 

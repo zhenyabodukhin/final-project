@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository("GoodRepositoryImpl")
-@Transactional
 public class GoodRepositoryImpl implements GoodRepositoryDao {
 
     public static final String GOOD_ID = "id";
@@ -55,6 +54,7 @@ public class GoodRepositoryImpl implements GoodRepositoryDao {
     }
 
     @Override
+    @Transactional
     public Good save(Good entity) {
         final String createQueryForGood = "INSERT INTO m_goods (name, good_price, weight, size_id, dough_id)" +
                 "VALUES (:name, :good_price, :weight, :size_id, :dough_id);";
@@ -73,6 +73,7 @@ public class GoodRepositoryImpl implements GoodRepositoryDao {
     }
 
     @Override
+    @Transactional
     public Good update(Good entity) {
         final String createQuery = "UPDATE m_goods set name = :name, good_price = :good_price," +
                 " weight = :weight, size_id = :size_id, dough_id = :dough_id where id = :id";
@@ -90,6 +91,7 @@ public class GoodRepositoryImpl implements GoodRepositoryDao {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         final String delete = "delete from m_goods where id = :id";
 
