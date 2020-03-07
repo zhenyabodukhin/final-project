@@ -21,7 +21,7 @@ public class SizeRepositoryImpl implements SizeRepositoryDao {
 
     public static final String SIZE_ID = "id";
     public static final String SIZE_COUNT = "size_count";
-    public static final String SIZE_PRICE = "size_price";
+    public static final String SIZE_PRICE = "price";
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -64,7 +64,7 @@ public class SizeRepositoryImpl implements SizeRepositoryDao {
 
     @Override
     public Size update(Size entity) {
-        final String createQuery = "UPDATE m_size set size_count = :size_coung, price = :price where id = :id";
+        final String createQuery = "UPDATE m_size set size_count = :size_count, price = :price where id = :id";
 
         MapSqlParameterSource paramsForSize = new MapSqlParameterSource();
         paramsForSize.addValue(SIZE_ID, entity.getId());
