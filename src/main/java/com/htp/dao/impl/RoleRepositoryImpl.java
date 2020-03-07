@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository("RoleRepositoryImpl")
-@Transactional
 public class RoleRepositoryImpl implements RoleRepositoryDao {
 
     public static final String ROLE_ID = "id";
@@ -48,6 +47,7 @@ public class RoleRepositoryImpl implements RoleRepositoryDao {
     }
 
     @Override
+    @Transactional
     public Role save(Role entity) {
         final String createQueryForRole = "INSERT INTO m_roles (user_id, role)" +
                 "VALUES (:user_id, :role);";
@@ -63,6 +63,7 @@ public class RoleRepositoryImpl implements RoleRepositoryDao {
     }
 
     @Override
+    @Transactional
     public Role update(Role entity) {
         final String createQuery = "UPDATE m_roles set user_id = :user_id, role = :role where id = :id";
 
@@ -76,6 +77,7 @@ public class RoleRepositoryImpl implements RoleRepositoryDao {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         final String delete = "delete from m_roles where id = :id";
 

@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository("UserRepositoryImpl")
-@Transactional
 public class UserRepositoryImpl implements UserRepositoryDao {
 
     public static final String USER_ID = "id";
@@ -61,6 +60,7 @@ public class UserRepositoryImpl implements UserRepositoryDao {
     }
 
     @Override
+    @Transactional
     public User save(User entity) {
         final String createQueryForUsers = "INSERT INTO m_users (login, password)" +
                 "VALUES (:login, :password);";
@@ -85,6 +85,7 @@ public class UserRepositoryImpl implements UserRepositoryDao {
 
 
     @Override
+    @Transactional
     public void delete(Long id) {
 
         final String delete = "UPDATE m_users set is_deleted = true where id = :id";
@@ -140,6 +141,7 @@ public class UserRepositoryImpl implements UserRepositoryDao {
 
 
     @Override
+    @Transactional
     public User update(User entity) {
         final String createQuery = "UPDATE m_users set login = :login, password = :password," +
                 " created = :created, changed = :changed, is_deleted = :is_deleted where id = :id";
@@ -157,6 +159,7 @@ public class UserRepositoryImpl implements UserRepositoryDao {
     }
 
     @Override
+    @Transactional
     public List<Long> batchUpdate(List<User> users) {
         final String createQuery = "UPDATE m_users set login = :login, password = :password," +
                 " created = :created, changed = :changed, is_deleted = :is_deleted where id = :id";

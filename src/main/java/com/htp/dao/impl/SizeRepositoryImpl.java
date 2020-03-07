@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository("SizeRepositoryImpl")
-@Transactional
 public class SizeRepositoryImpl implements SizeRepositoryDao {
 
     public static final String SIZE_ID = "id";
@@ -48,6 +47,7 @@ public class SizeRepositoryImpl implements SizeRepositoryDao {
     }
 
     @Override
+    @Transactional
     public Size save(Size entity) {
         final String createQueryForSize = "INSERT INTO m_size (size_count, price)" +
                 "VALUES (:size_count, :price);";
@@ -63,6 +63,7 @@ public class SizeRepositoryImpl implements SizeRepositoryDao {
     }
 
     @Override
+    @Transactional
     public Size update(Size entity) {
         final String createQuery = "UPDATE m_size set size_count = :size_count, price = :price where id = :id";
 
@@ -76,6 +77,7 @@ public class SizeRepositoryImpl implements SizeRepositoryDao {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         final String delete = "delete from m_size where id = :id";
 

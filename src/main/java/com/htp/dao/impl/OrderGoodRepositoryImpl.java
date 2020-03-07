@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository("OrderGoodRepositoryImpl")
-@Transactional
 public class OrderGoodRepositoryImpl implements OrderGoodRepositoryDao {
 
     public static final String ORDER_GOOD_ID = "id";
@@ -50,6 +49,7 @@ public class OrderGoodRepositoryImpl implements OrderGoodRepositoryDao {
     }
 
     @Override
+    @Transactional
     public OrderGood save(OrderGood entity) {
         final String createQueryForOrderGood = "INSERT INTO order_goods (order_id, good_id, count)" +
                 "VALUES (:order_id, :good_id, :count);";
@@ -66,6 +66,7 @@ public class OrderGoodRepositoryImpl implements OrderGoodRepositoryDao {
     }
 
     @Override
+    @Transactional
     public OrderGood update(OrderGood entity) {
         final String createQuery = "UPDATE order_goods set order_id = :order_id, good_id = :good_id, count = :count " +
                 "where id = :id";
@@ -81,6 +82,7 @@ public class OrderGoodRepositoryImpl implements OrderGoodRepositoryDao {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         final String delete = "delete from order_goods where id = :id";
 
