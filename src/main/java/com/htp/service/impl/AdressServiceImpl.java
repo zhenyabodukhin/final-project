@@ -20,33 +20,29 @@ public class AdressServiceImpl implements AdressService {
 
     @Override
     public List<Adress> findAll() {
-
-        List<Adress> list = adressRepository.findAll();
-        return list;
+        return adressRepository.findAll();
     }
 
     @Transactional
     @Override
-    public Adress addAdress(Adress adress) {
-
-       Adress savedAdress = adressRepository.saveAndFlush(adress) ;
-       return savedAdress;
+    public Adress save(Adress adress) {
+       return adressRepository.save(adress);
     }
 
     @Transactional
     @Override
     public Adress update(Adress adress) {
-        return null;
+        return adressRepository.saveAndFlush(adress);
     }
 
     @Transactional
     @Override
     public void delete(Long id) {
-
+        adressRepository.deleteById(id);
     }
 
     @Override
     public Adress findById(Long id) {
-        return null;
+        return adressRepository.getOne(id);
     }
 }
