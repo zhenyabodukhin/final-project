@@ -4,6 +4,10 @@ import lombok.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "m_roles")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,10 +17,14 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 @EqualsAndHashCode
 public class Role {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_id")
     private Long userId;
 
+    @Column(name = "role")
     private String role;
 
     public Role(Long userId, String role){

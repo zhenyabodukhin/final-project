@@ -1,7 +1,8 @@
-package com.htp.dao.impl;
+package com.htp.service.impl;
 
-import com.htp.dao.DoughTypeRepositoryDao;
+import com.htp.repository.DoughTypeRepository;
 import com.htp.domain.DoughType;
+import com.htp.service.DoughTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository("DoughTypeRepositoryImpl")
-public class DoughTypeRepositoryImpl implements DoughTypeRepositoryDao {
+public class DoughTypeRepositoryImpl implements DoughTypeService {
 
     public static final String DOUGH_ID = "id";
     public static final String DOUGH = "type";

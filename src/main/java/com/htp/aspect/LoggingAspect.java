@@ -17,7 +17,7 @@ public class LoggingAspect {
     private MethodCallCounterImpl methodCallCounter;
 
 
-    @Around("execution(* com.htp.dao.impl.UserRepositoryImpl.*(..))")
+    @Around("execution(* com.htp.service.impl.UserRepositoryImpl.*(..))")
     public Object logBefore(ProceedingJoinPoint pjp) throws Throwable {
         String method = pjp.getSignature().getName();
         methodCallCounter.count(method);

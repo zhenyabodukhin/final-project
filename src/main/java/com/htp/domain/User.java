@@ -4,9 +4,11 @@ import lombok.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-
+import javax.persistence.*;
 import java.sql.Timestamp;
 
+@Entity
+@Table(name = "m_users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,16 +18,23 @@ import java.sql.Timestamp;
 @EqualsAndHashCode
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "login")
     private String login;
 
+    @Column(name = "password")
     private String password;
 
+    @Column(name = "created")
     private Timestamp created;
 
+    @Column(name = "changed")
     private Timestamp changed;
 
+    @Column(name = "is_deleted")
     private boolean isDeleted;
 
     public User(String login, String password) {

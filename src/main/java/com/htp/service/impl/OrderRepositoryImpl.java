@@ -1,8 +1,9 @@
-package com.htp.dao.impl;
+package com.htp.service.impl;
 
 
-import com.htp.dao.OrderRepositoryDao;
+import com.htp.repository.OrderRepository;
 import com.htp.domain.Order;
+import com.htp.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -21,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository("OrderRepositoryImpl")
-public class OrderRepositoryImpl implements OrderRepositoryDao {
+public class OrderRepositoryImpl implements OrderService {
 
     public static final String ORDER_ID = "id";
     public static final String USER_ID = "user_id";

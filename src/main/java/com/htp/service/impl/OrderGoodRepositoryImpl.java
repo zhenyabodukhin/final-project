@@ -1,7 +1,8 @@
-package com.htp.dao.impl;
+package com.htp.service.impl;
 
-import com.htp.dao.OrderGoodRepositoryDao;
+import com.htp.repository.OrderGoodRepository;
 import com.htp.domain.OrderGood;
+import com.htp.service.OrderGoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository("OrderGoodRepositoryImpl")
-public class OrderGoodRepositoryImpl implements OrderGoodRepositoryDao {
+public class OrderGoodRepositoryImpl implements OrderGoodService {
 
     public static final String ORDER_GOOD_ID = "id";
     public static final String ORDER_ID = "order_id";
