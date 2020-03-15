@@ -1,7 +1,8 @@
-package com.htp.dao.impl;
+package com.htp.service.impl;
 
-import com.htp.dao.SizeRepositoryDao;
+import com.htp.repository.SizeRepository;
 import com.htp.domain.Size;
+import com.htp.service.SizeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository("SizeRepositoryImpl")
-public class SizeRepositoryImpl implements SizeRepositoryDao {
+public class SizeRepositoryImpl implements SizeService {
 
     public static final String SIZE_ID = "id";
     public static final String SIZE_COUNT = "size_count";
@@ -49,7 +50,7 @@ public class SizeRepositoryImpl implements SizeRepositoryDao {
     @Override
     @Transactional
     public Size save(Size entity) {
-        final String createQueryForSize = "INSERT INTO m_size (size_count, price)" +
+        final String createQueryForSize = "INSERT INTO m_size (size_count, size_price)" +
                 "VALUES (:size_count, :price);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -65,7 +66,7 @@ public class SizeRepositoryImpl implements SizeRepositoryDao {
     @Override
     @Transactional
     public Size update(Size entity) {
-        final String createQuery = "UPDATE m_size set size_count = :size_count, price = :price where id = :id";
+        final String createQuery = "UPDATE m_size set size_count = :size_count, size_price = :price where id = :id";
 
         MapSqlParameterSource paramsForSize = new MapSqlParameterSource();
         paramsForSize.addValue(SIZE_ID, entity.getId());

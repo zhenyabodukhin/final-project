@@ -4,6 +4,10 @@ import lombok.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "m_dough_type")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,10 +17,14 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 @EqualsAndHashCode
 public class DoughType {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "type")
     private String doughType;
 
+    @Column(name = "dough_price")
     private Double doughPrice;
 
     public DoughType(String doughType, Double doughPrice) {

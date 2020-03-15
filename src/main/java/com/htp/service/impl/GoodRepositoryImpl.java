@@ -1,7 +1,8 @@
-package com.htp.dao.impl;
+package com.htp.service.impl;
 
-import com.htp.dao.GoodRepositoryDao;
+import com.htp.repository.GoodRepository;
 import com.htp.domain.Good;
+import com.htp.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository("GoodRepositoryImpl")
-public class GoodRepositoryImpl implements GoodRepositoryDao {
+public class GoodRepositoryImpl implements GoodService {
 
     public static final String GOOD_ID = "id";
     public static final String GOOD_NAME = "name";

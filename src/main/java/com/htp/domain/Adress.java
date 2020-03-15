@@ -4,6 +4,10 @@ import lombok.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "m_adress")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,18 +17,26 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 @EqualsAndHashCode
 public class Adress {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "street")
     private String street;
 
+    @Column(name = "n_house")
     private String houseNumber;
 
+    @Column(name = "n_flat")
     private Integer flatNumber;
 
+    @Column(name = "n_floor")
     private Integer floorNumber;
 
+    @Column(name = "n_porch")
     private Integer porchNumber;
 
+    @Column(name = "is_pizza")
     private Boolean isPizzaAdress;
 
     public Adress(String street, String houseNumber, Integer flatNumber, Integer floorNumber, Integer porchNumber, Boolean isPizzaAdress){

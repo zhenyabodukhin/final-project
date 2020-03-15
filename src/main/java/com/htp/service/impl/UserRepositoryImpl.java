@@ -1,8 +1,9 @@
-package com.htp.dao.impl;
+package com.htp.service.impl;
 
 
-import com.htp.dao.UserRepositoryDao;
+import com.htp.repository.UserRepository;
 import com.htp.domain.User;
+import com.htp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository("UserRepositoryImpl")
-public class UserRepositoryImpl implements UserRepositoryDao {
+public class UserRepositoryImpl implements UserService {
 
     public static final String USER_ID = "id";
     public static final String USER_NAME = "login";

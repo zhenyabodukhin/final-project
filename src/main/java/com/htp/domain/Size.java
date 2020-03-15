@@ -4,6 +4,10 @@ import lombok.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "m_size")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,10 +17,14 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 @EqualsAndHashCode
 public class Size {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "size_count")
     private Integer sizeCount;
 
+    @Column(name = "size_price")
     private Double sizePrice;
 
     public Size(Integer sizeCount, Double sizePrice){

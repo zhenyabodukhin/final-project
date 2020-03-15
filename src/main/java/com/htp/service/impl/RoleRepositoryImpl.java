@@ -1,7 +1,8 @@
-package com.htp.dao.impl;
+package com.htp.service.impl;
 
-import com.htp.dao.RoleRepositoryDao;
+import com.htp.repository.RoleRepository;
 import com.htp.domain.Role;
+import com.htp.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository("RoleRepositoryImpl")
-public class RoleRepositoryImpl implements RoleRepositoryDao {
+public class RoleRepositoryImpl implements RoleService {
 
     public static final String ROLE_ID = "id";
     public static final String USER_ID = "user_id";

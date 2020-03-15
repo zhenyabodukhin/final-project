@@ -4,9 +4,11 @@ import lombok.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 
-
+@Entity
+@Table(name = "m_orders")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,16 +18,23 @@ import java.sql.Timestamp;
 @EqualsAndHashCode
 public class Order {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_id")
     private Long userId;
 
+    @Column(name = "adress_id")
     private Long adressId;
 
+    @Column(name = "time")
     private Timestamp time;
 
+    @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Column(name = "is_done")
     private boolean isDone;
 
     public Order(Long userId, Long adressId, String phoneNumber){
