@@ -5,11 +5,12 @@ import com.htp.repository.GoodRepository;
 import com.htp.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository("GoodRepositoryImpl")
-public class GoodRepositoryImpl implements GoodService {
+@Repository("GoodServiceImpl")
+public class GoodServiceImpl implements GoodService {
 
     @Autowired
     GoodRepository goodRepository;
@@ -20,16 +21,19 @@ public class GoodRepositoryImpl implements GoodService {
         return goodRepository.findAll();
     }
 
+    @Transactional
     @Override
     public Good save(Good good) {
         return goodRepository.save(good);
     }
 
+    @Transactional
     @Override
     public Good update(Good good) {
         return goodRepository.saveAndFlush(good);
     }
 
+    @Transactional
     @Override
     public void delete(Long id) {
         goodRepository.deleteById(id);

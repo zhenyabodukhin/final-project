@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository("DoughTypeRepositoryImpl")
-public class DoughTypeRepositoryImpl implements DoughTypeService {
+@Repository("DoughTypeServiceImpl")
+public class DoughTypeServiceImpl implements DoughTypeService {
 
     @Autowired
     private DoughTypeRepository doughTypeRepository;
