@@ -45,4 +45,9 @@ public class AdressServiceImpl implements AdressService {
     public Adress findById(Long id) {
         return adressRepository.getOne(id);
     }
+
+    @Override
+    public List<Adress> findContainsValue(String value) {
+        return adressRepository.findContainsValue(value);
+    }
 }
