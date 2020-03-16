@@ -15,4 +15,11 @@ public interface OrderService {
     void delete (Long id);
 
     Order findById(Long id);
+
+    void setOrderDone(Long id);
+
+    List<Order> findByUserId(Long id);
+
+    List<Order> findIsDone(boolean value);
+
 }

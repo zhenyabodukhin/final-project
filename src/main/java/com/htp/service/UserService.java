@@ -15,4 +15,10 @@ public interface UserService {
     void delete (Long id);
 
     User findById(Long id);
+
+    User findByName (String name);
+
+    List<User> findContainsValue (String value);
+
+    List<User> findIsDeleted (boolean value);
 }

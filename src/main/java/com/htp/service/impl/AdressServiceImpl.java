@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Repository("AdressTest")
+@Repository("AdressServiceImpl")
 public class AdressServiceImpl implements AdressService {
 
     @Autowired
