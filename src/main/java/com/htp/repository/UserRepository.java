@@ -13,9 +13,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByName (@Param("login") String name);
 
     @Query("select t from User t where t.login like :value")
-    List<User> findContainsValue (@Param("login") String value);
+    List<User> findContainsValue (@Param("value") String value);
 
-    @Query("select t from User t where t.isDeleted = :isDelete")
+    @Query("select t from User t where t.isDeleted = :isDeleted")
     List<User> findIsDeleted (@Param("isDeleted") boolean value);
 
     @Query("update User t set t.isDeleted=true where t.id=:id")
