@@ -1,7 +1,6 @@
 package com.htp.service;
 
 import com.htp.domain.Adress;
-import com.htp.domain.DoughType;
 
 import java.util.List;
 
@@ -17,5 +16,5 @@ public interface AdressService {
 
     Adress findById(Long id);
 
-
+    List<Adress> findContainsValue (String value);
 }

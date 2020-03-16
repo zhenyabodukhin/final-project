@@ -19,6 +19,11 @@ public class StartAdress {
             System.out.println(adress.toString());
         }
 
+        System.out.println("Метод Adress findContainsValue");
+        for(Adress adress : adressServiceImpl.findContainsValue("Mi")){
+            System.out.println(adress.toString());
+        }
+
         System.out.println("Метод Adress save");
         Adress adress = new Adress("Mickevich", "39", 1, 2,
                 2, false);
