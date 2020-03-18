@@ -5,12 +5,12 @@ import com.htp.domain.Order;
 import com.htp.repository.OrderRepository;
 import com.htp.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository("OrderServiceImpl")
+@Service("OrderServiceImpl")
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
@@ -39,6 +39,7 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public Order findById(Long id) {
         return orderRepository.getOne(id);

@@ -4,12 +4,12 @@ import com.htp.domain.OrderGood;
 import com.htp.repository.OrderGoodRepository;
 import com.htp.service.OrderGoodService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository("OrderGoodServiceImpl")
+@Service("OrderGoodServiceImpl")
 public class OrderGoodServiceImpl implements OrderGoodService {
 
     @Autowired
@@ -38,6 +38,7 @@ public class OrderGoodServiceImpl implements OrderGoodService {
         orderGoodRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public OrderGood findById(Long id) {
         return orderGoodRepository.getOne(id);

@@ -17,6 +17,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 public class Good {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,8 +25,8 @@ public class Good {
     @Column(name = "name")
     private String goodName;
 
-    @Column(name = "good_price")
-    private Double goodPrice;
+    @Column(name = "price_id")
+    private Long goodPrice;
 
     @Column(name = "weight")
     private Double goodWeight;
@@ -36,7 +37,7 @@ public class Good {
     @Column(name = "dough_id")
     private Long doughId;
 
-    public Good(String goodName, Double goodPrice, Double goodWeight, Long sizeId, Long doughId) {
+    public Good(String goodName, Long goodPrice, Double goodWeight, Long sizeId, Long doughId) {
         this.goodName = goodName;
         this.goodPrice = goodPrice;
         this.goodWeight = goodWeight;
@@ -48,4 +49,12 @@ public class Good {
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "size_id", nullable = false)
+    private Size size;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "dough_id", nullable = false)
+    private DoughType doughType;
 }

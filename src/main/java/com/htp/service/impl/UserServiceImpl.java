@@ -5,12 +5,12 @@ import com.htp.domain.User;
 import com.htp.repository.UserRepository;
 import com.htp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository("UserServiceImpl")
+@Service("UserServiceImpl")
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -39,6 +39,7 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(id);
     }
 
+    @Transactional
     @Override
     public User findById(Long id) {
         return userRepository.getOne(id);
