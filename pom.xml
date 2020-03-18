@@ -13,6 +13,8 @@
 
     <properties>
         <dbcp-version>1.4</dbcp-version>
+        <log4j>1.2.17</log4j>
+        <swagger.version>2.9.2</swagger.version>
     </properties>
 
     <parent>
@@ -95,6 +97,7 @@
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
+            <version>${log4j}</version>
         </dependency>
 
 
@@ -137,6 +140,18 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
 
 

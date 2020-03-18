@@ -1,4 +1,4 @@
-package com.htp.config;
+package com.htp.config.core;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
