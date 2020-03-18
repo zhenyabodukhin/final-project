@@ -17,6 +17,14 @@ import javax.persistence.*;
 @EqualsAndHashCode
 public class OrderGood {
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "good_id", nullable = false)
+    private Good good;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

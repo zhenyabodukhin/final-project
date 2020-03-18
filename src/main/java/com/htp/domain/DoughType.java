@@ -24,10 +24,10 @@ public class DoughType {
     @Column(name = "type")
     private String doughType;
 
-    @Column(name = "dough_price")
-    private Double doughPrice;
+    @Column(name = "price_id")
+    private Long doughPrice;
 
-    public DoughType(String doughType, Double doughPrice) {
+    public DoughType(String doughType, Long doughPrice) {
         this.doughType = doughType;
         this.doughPrice = doughPrice;
     }

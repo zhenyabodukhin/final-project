@@ -4,13 +4,12 @@ import com.htp.domain.Size;
 import com.htp.repository.SizeRepository;
 import com.htp.service.SizeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository("SizeServiceImpl")
-
+@Service("SizeServiceImpl")
 public class SizeServiceImpl implements SizeService {
 
     @Autowired
@@ -39,6 +38,7 @@ public class SizeServiceImpl implements SizeService {
         sizeRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public Size findById(Long id) {
         return sizeRepository.getOne(id);

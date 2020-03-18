@@ -21,13 +21,13 @@ public class Size {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "size_count")
+    @Column(name = "size")
     private Integer sizeCount;
 
-    @Column(name = "size_price")
-    private Double sizePrice;
+    @Column(name = "price_id")
+    private Long sizePrice;
 
-    public Size(Integer sizeCount, Double sizePrice){
+    public Size(Integer sizeCount, Long sizePrice){
         this.sizeCount = sizeCount;
         this.sizePrice = sizePrice;
     }

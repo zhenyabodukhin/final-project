@@ -19,10 +19,10 @@ public class StartAdress {
 //            System.out.println(adress.toString());
 //        }
 
-//        System.out.println("Метод Adress findContainsValue");
-//        for(Adress adress : adressServiceImpl.findContainsValue("Mi")){
-//            System.out.println(adress.toString());
-//        }
+        System.out.println("Метод Adress findContainsValue");
+        for(Adress adress : adressServiceImpl.findContainsValue("Mi")){
+            System.out.println(adress.toString());
+        }
 //
 //        System.out.println("Метод Adress save");
 //        Adress adress = new Adress("Lomonosova", "43", 1, 2, 2, false);  //OK
@@ -36,7 +36,7 @@ public class StartAdress {
 //        System.out.println("Метод Adress delete");      //OK
 //        adressServiceImpl.delete(3L);
 //
-        System.out.println("Метод Adress findById");
-        System.out.println(adressServiceImpl.findById(1L));
+//        System.out.println("Метод Adress findById");
+//        System.out.println(adressServiceImpl.findById(1L));
     }
 }
