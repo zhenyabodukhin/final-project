@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"id"})
 public class OrderGood {
 
     @Id
