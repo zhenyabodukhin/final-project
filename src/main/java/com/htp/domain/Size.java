@@ -26,7 +26,7 @@ public class Size {
     private Integer sizeCount;
 
     @Column(name = "price_id")
-    private Long sizePrice;
+    private Long priceId;
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "sizeGood")

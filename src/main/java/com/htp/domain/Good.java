@@ -27,7 +27,7 @@ public class Good {
     private String goodName;
 
     @Column(name = "price_id")
-    private Long goodPrice;
+    private Long priceId;
 
     @Column(name = "weight")
     private Double goodWeight;
