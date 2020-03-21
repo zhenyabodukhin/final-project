@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 @Setter
 @Getter
 @Builder
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"id"})
 public class User {
 
     @Id

@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Builder
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"id"})
 public class Adress {
 
     @Id
