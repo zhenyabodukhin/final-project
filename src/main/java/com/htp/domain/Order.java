@@ -1,21 +1,22 @@
 package com.htp.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collections;
+import java.util.Set;
 
 @Entity
 @Table(name = "m_orders")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Setter
 @Getter
-@Builder
-@EqualsAndHashCode(exclude = {"id"})
+@EqualsAndHashCode(exclude = {"id", "userOrder", "adressOrder", "orderGoods"})
+@ToString(exclude = {"userOrder", "adressOrder", "orderGoods"})
 public class Order {
 
     @Id
@@ -37,14 +38,17 @@ public class Order {
     @Column(name = "is_done")
     private boolean isDone;
 
-    public Order(Long userId, Long adressId, String phoneNumber){
-        this.userId = userId;
-        this.adressId = adressId;
-        this.phoneNumber = phoneNumber;
-    }
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User userOrder;
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "adress_id", insertable = false, updatable = false)
+    private Adress adressOrder;
+
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "order")
+    private Set<OrderGood> orderGoods = Collections.emptySet();
 }

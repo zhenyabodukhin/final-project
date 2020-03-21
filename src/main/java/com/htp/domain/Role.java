@@ -1,24 +1,23 @@
 package com.htp.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "m_roles")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
-@Builder
-@EqualsAndHashCode(exclude = {"id"})
+@EqualsAndHashCode(exclude = {"id", "userRole"})
+@ToString(exclude = {"userRole"})
 public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "user_id")
@@ -27,13 +26,9 @@ public class Role {
     @Column(name = "role")
     private String role;
 
-    public Role(Long userId, String role){
-        this.userId = userId;
-        this.role = role;
-    }
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User userRole;
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
 }

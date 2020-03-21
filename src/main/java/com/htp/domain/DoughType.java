@@ -1,20 +1,21 @@
 package com.htp.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
+import java.util.Collections;
+import java.util.Set;
 
 @Entity
 @Table(name = "m_dough_type")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
+@RequiredArgsConstructor
 @Setter
-@Builder
-@EqualsAndHashCode(exclude = {"id"})
+@Getter
+@EqualsAndHashCode(exclude = {"id", "goods", "priceDoughType"})
+@ToString(exclude = {"goods", "priceDoughType"})
 public class DoughType {
 
     @Id
@@ -27,13 +28,12 @@ public class DoughType {
     @Column(name = "price_id")
     private Long doughPrice;
 
-    public DoughType(String doughType, Long doughPrice) {
-        this.doughType = doughType;
-        this.doughPrice = doughPrice;
-    }
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "doughTypeGood")
+    private Set<Good> goods = Collections.emptySet();
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "price_id", insertable = false, updatable = false)
+    private Price priceDoughType;
 }

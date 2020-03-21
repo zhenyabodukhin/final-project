@@ -1,20 +1,21 @@
 package com.htp.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
+import java.util.Collections;
+import java.util.Set;
 
 @Entity
 @Table(name = "m_goods")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
-@Builder
-@EqualsAndHashCode(exclude = {"id"})
+@EqualsAndHashCode(exclude = {"id", "orderGoods", "priceGood", "sizeGood", "doughTypeGood"})
+@ToString(exclude = {"orderGoods", "priceGood", "sizeGood", "doughTypeGood"})
 public class Good {
 
 
@@ -37,17 +38,23 @@ public class Good {
     @Column(name = "dough_id")
     private Long doughId;
 
-    public Good(String goodName, Long goodPrice, Double goodWeight, Long sizeId, Long doughId) {
-        this.goodName = goodName;
-        this.goodPrice = goodPrice;
-        this.goodWeight = goodWeight;
-        this.sizeId = sizeId;
-        this.doughId = doughId;
-    }
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "good")
+    private Set<OrderGood> orderGoods = Collections.emptySet();
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "price_id", insertable = false, updatable = false)
+    private Price priceGood;
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "size_id", insertable = false, updatable = false)
+    private Size sizeGood;
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "dough_id", insertable = false, updatable = false)
+    private DoughType doughTypeGood;
 
 }

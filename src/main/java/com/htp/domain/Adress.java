@@ -1,20 +1,20 @@
 package com.htp.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
+import java.util.Collections;
+import java.util.Set;
 
 @Entity
 @Table(name = "m_adress")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Setter
 @Getter
-@Builder
-@EqualsAndHashCode(exclude = {"id"})
+@EqualsAndHashCode(exclude = {"id", "orders"})
+@ToString(exclude = {"orders"})
 public class Adress {
 
     @Id
@@ -39,17 +39,7 @@ public class Adress {
     @Column(name = "is_pizza")
     private Boolean isPizzaAdress;
 
-    public Adress(String street, String houseNumber, Integer flatNumber, Integer floorNumber, Integer porchNumber, Boolean isPizzaAdress){
-        this.street = street;
-        this.houseNumber = houseNumber;
-        this.flatNumber = flatNumber;
-        this.floorNumber = floorNumber;
-        this.porchNumber = porchNumber;
-        this.isPizzaAdress = isPizzaAdress;
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "adressOrder")
+    private Set<Order> orders = Collections.emptySet();
 }
