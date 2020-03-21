@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findIsDeleted(boolean value) {
+    public List<User> findIsDeleted(Boolean value) {
         return userRepository.findIsDeleted(value);
     }
 }

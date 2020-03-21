@@ -15,4 +15,6 @@ public interface RoleService {
     void delete (Long id);
 
     Role findById(Long id);
+
+    List<Role> findByUserId(Long id);
 }

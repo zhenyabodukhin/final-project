@@ -20,5 +20,5 @@ public interface UserService {
 
     List<User> findContainsValue (String value);
 
-    List<User> findIsDeleted (boolean value);
+    List<User> findIsDeleted (Boolean value);
 }
