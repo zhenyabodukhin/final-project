@@ -26,7 +26,7 @@ public class DoughType {
     private String doughType;
 
     @Column(name = "price_id")
-    private Long doughPrice;
+    private Long priceId;
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "doughTypeGood")
