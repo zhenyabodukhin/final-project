@@ -1,21 +1,21 @@
 package com.htp.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collections;
+import java.util.Set;
 
 @Entity
 @Table(name = "m_users")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Setter
 @Getter
-@Builder
-@EqualsAndHashCode(exclude = {"id"})
+@EqualsAndHashCode(exclude = {"id", "roles", "orders"})
+@ToString(exclude = {"roles", "orders"})
 public class User {
 
     @Id
@@ -37,13 +37,12 @@ public class User {
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
-    public User(String login, String password) {
-        this.login = login;
-        this.password = password;
-    }
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "userRole")
+    private Set<Role> roles = Collections.emptySet();
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "userOrder")
+    private Set<Order> orders = Collections.emptySet();
+
 }

@@ -1,20 +1,18 @@
 package com.htp.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "order_goods")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
-@Builder
-@EqualsAndHashCode(exclude = {"id"})
+@EqualsAndHashCode(exclude = {"id", "order", "good"})
+@ToString(exclude = {"order", "good"})
 public class OrderGood {
 
     @Id
@@ -30,14 +28,13 @@ public class OrderGood {
     @Column(name = "count")
     private Integer goodCount;
 
-    public OrderGood(Long orderId, Long goodId, Integer goodCount) {
-        this.orderId = orderId;
-        this.goodId = goodId;
-        this.goodCount = goodCount;
-    }
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_id", insertable = false, updatable = false)
+    private Order order;
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "good_id", insertable = false, updatable = false)
+    private Good good;
 }

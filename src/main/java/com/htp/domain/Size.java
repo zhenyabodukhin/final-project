@@ -1,20 +1,21 @@
 package com.htp.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
+import java.util.Collections;
+import java.util.Set;
 
 @Entity
 @Table(name = "m_size")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
+@RequiredArgsConstructor
 @Setter
-@Builder
-@EqualsAndHashCode(exclude = {"id"})
+@Getter
+@EqualsAndHashCode(exclude = {"id", "goods", "priceSize"})
+@ToString(exclude = {"goods", "priceSize"})
 public class Size {
 
     @Id
@@ -27,13 +28,12 @@ public class Size {
     @Column(name = "price_id")
     private Long sizePrice;
 
-    public Size(Integer sizeCount, Long sizePrice){
-        this.sizeCount = sizeCount;
-        this.sizePrice = sizePrice;
-    }
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "sizeGood")
+    private Set<Good> goods = Collections.emptySet();
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "price_id", insertable = false, updatable = false)
+    private Price priceSize;
 }
