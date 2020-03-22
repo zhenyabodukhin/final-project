@@ -15,4 +15,6 @@ public interface OrderGoodService {
     void delete (Long id);
 
     OrderGood findById(Long id);
+
+    List<OrderGood> findByOrderId (Long id);
 }

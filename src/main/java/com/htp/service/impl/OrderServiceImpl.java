@@ -57,7 +57,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findIsDone(boolean value) {
+    public List<Order> findIsDone(Boolean value) {
         return orderRepository.findIsDone(value);
+    }
+
+    @Override
+    public List<Order> findByAdressId(Long id) {
+        return orderRepository.findByAdressId(id);
+    }
+
+    @Override
+    public List<Order> findByPhoneNumber(String phoneNumber) {
+        return orderRepository.findByPhoneNumber(phoneNumber);
     }
 }
