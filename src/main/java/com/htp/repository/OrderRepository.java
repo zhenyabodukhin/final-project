@@ -9,13 +9,19 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    @Query("update Order t set t.isDone=true where t.id=:id")
+    @Query("update Order o set o.isDone=true where o.id=:id")
     void setOrderDone(@Param("id") Long id);
 
-    @Query("select t from Order t where t.id=:id")
+    @Query("select o from Order o where o.id=:id")
     List<Order> findByUserId(@Param("id") Long id);
 
-    @Query("select t from Order t where t.isDone=:isDone")
-    List<Order> findIsDone(@Param("isDone") boolean value);
+    @Query("select o from Order o where o.isDone=:isDone")
+    List<Order> findIsDone(@Param("isDone") Boolean value);
+
+    @Query("select o from Order o where o.adressId=:adressId")
+    List<Order> findByAdressId(@Param("adressId") Long id);
+
+    @Query("select o from Order o where o.phoneNumber=:phoneNumber")
+    List<Order> findByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 
 }

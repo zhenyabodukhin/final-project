@@ -44,5 +44,8 @@ public class GoodServiceImpl implements GoodService {
     public Good findById(Long id) {
         return goodRepository.getOne(id);
     }
+
+    @Override
+    public Good findGoodByName(String name) {return goodRepository.findGoodByName(name); }
 }
 

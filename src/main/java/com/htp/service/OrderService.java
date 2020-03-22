@@ -20,6 +20,10 @@ public interface OrderService {
 
     List<Order> findByUserId(Long id);
 
-    List<Order> findIsDone(boolean value);
+    List<Order> findIsDone(Boolean value);
+
+    List<Order> findByAdressId(Long id);
+
+    List<Order> findByPhoneNumber(String phoneNumber);
 
 }

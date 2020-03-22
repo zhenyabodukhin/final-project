@@ -15,4 +15,6 @@ public interface GoodService {
     void delete (Long id);
 
     Good findById(Long id);
+
+    Good findGoodByName(String name);
 }

@@ -43,5 +43,10 @@ public class OrderGoodServiceImpl implements OrderGoodService {
     public OrderGood findById(Long id) {
         return orderGoodRepository.getOne(id);
     }
+
+    @Override
+    public List<OrderGood> findByOrderId(Long id) {
+        return orderGoodRepository.findByOrderId(id);
+    }
 }
 
