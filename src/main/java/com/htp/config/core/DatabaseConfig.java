@@ -4,10 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.dbcp.BasicDataSource;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
-
 
 import java.util.Objects;
 
@@ -15,19 +13,25 @@ import java.util.Objects;
 @Getter
 @NoArgsConstructor
 @Configuration
-@ConfigurationProperties("datasource")
+@PropertySource("classpath:application.properties")
 public class DatabaseConfig {
 
+    @Value("${driver}")
     private String driverName;
 
+    @Value("${url}")
     private String url;
 
+    @Value("${login}")
     private String login;
 
+    @Value("${password}")
     private String password;
 
+    @Value("${initial-size}")
     private String initialSize;
 
+    @Value("${max-active}")
     private String maxActive;
 
     @Bean(value = "dataSource", destroyMethod = "close")
@@ -35,12 +39,12 @@ public class DatabaseConfig {
     @Primary
     public BasicDataSource getDatasource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setPassword("root");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/project_pizza");
-        dataSource.setInitialSize(Integer.valueOf(Objects.requireNonNull("10")));
-        dataSource.setUsername("postgres");
-        dataSource.setMaxActive(Integer.valueOf(Objects.requireNonNull("7")));
+        dataSource.setDriverClassName(driverName);
+        dataSource.setPassword(password);
+        dataSource.setUrl(url);
+        dataSource.setInitialSize(Integer.valueOf(Objects.requireNonNull(initialSize)));
+        dataSource.setUsername(login);
+        dataSource.setMaxActive(Integer.valueOf(Objects.requireNonNull(maxActive)));
         return dataSource;
     }
 }

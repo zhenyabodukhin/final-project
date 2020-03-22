@@ -3,6 +3,7 @@ package com.htp;
 import com.htp.config.core.DatabaseConfig;
 import com.htp.config.core.JpaConfig;
 import com.htp.config.swagger.SwaggerConfig;
+import com.htp.config.web.WebSecurityConfiguration;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -30,7 +31,8 @@ import java.util.Properties;
 @Import({
         DatabaseConfig.class,
         JpaConfig.class,
-        SwaggerConfig.class
+        SwaggerConfig.class,
+        WebSecurityConfiguration.class
 })
 public class StartApplication extends SpringBootServletInitializer {
     public static void main(String[] args) {
