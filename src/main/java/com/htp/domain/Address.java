@@ -8,14 +8,14 @@ import java.util.Collections;
 import java.util.Set;
 
 @Entity
-@Table(name = "m_adress")
+@Table(name = "m_address")
 @Data
 @RequiredArgsConstructor
 @Setter
 @Getter
 @EqualsAndHashCode(exclude = {"id", "orders"})
 @ToString(exclude = {"orders"})
-public class Adress {
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,9 +37,9 @@ public class Adress {
     private Integer porchNumber;
 
     @Column(name = "is_pizza")
-    private Boolean isPizzaAdress;
+    private Boolean isPizzaAddress;
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "adressOrder")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "addressOrder")
     private Set<Order> orders = Collections.emptySet();
 }

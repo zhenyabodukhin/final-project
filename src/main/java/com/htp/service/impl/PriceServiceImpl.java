@@ -38,9 +38,8 @@ public class PriceServiceImpl implements PriceService {
         priceRepository.deleteById(id);
     }
 
-    @Transactional
     @Override
     public Price findById(Long id) {
-        return priceRepository.getOne(id);
+        return priceRepository.findById(id).get();
     }
 }

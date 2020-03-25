@@ -38,9 +38,8 @@ public class DoughTypeServiceImpl implements DoughTypeService {
         doughTypeRepository.deleteById(id);
     }
 
-    @Transactional
     @Override
     public DoughType findById(Long id) {
-        return doughTypeRepository.getOne(id);
+        return doughTypeRepository.findById(id).get();
     }
 }

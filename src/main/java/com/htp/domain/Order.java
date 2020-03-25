@@ -15,8 +15,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {"id", "userOrder", "adressOrder", "orderGoods"})
-@ToString(exclude = {"userOrder", "adressOrder", "orderGoods"})
+@EqualsAndHashCode(exclude = {"id", "userOrder", "addressOrder", "orderGoods"})
+@ToString(exclude = {"userOrder", "addressOrder", "orderGoods"})
 public class Order {
 
     @Id
@@ -26,8 +26,8 @@ public class Order {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "adress_id")
-    private Long adressId;
+    @Column(name = "address_id")
+    private Long addressId;
 
     @Column(name = "time")
     private Timestamp time;
@@ -45,8 +45,8 @@ public class Order {
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "adress_id", insertable = false, updatable = false)
-    private Adress adressOrder;
+    @JoinColumn(name = "address_id", insertable = false, updatable = false)
+    private Address addressOrder;
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "order")

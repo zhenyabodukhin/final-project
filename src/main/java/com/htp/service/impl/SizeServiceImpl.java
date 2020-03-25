@@ -38,10 +38,9 @@ public class SizeServiceImpl implements SizeService {
         sizeRepository.deleteById(id);
     }
 
-    @Transactional
     @Override
     public Size findById(Long id) {
-        return sizeRepository.getOne(id);
+        return sizeRepository.findById(id).get();
     }
 }
 
