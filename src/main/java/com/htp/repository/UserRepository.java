@@ -12,7 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u where u.login = :login")
     User findByName (@Param("login") String name);
 
-    @Query("select u from User u where u.login like :value")
+    @Query("select u from User u where lower(u.login) like concat('%', lower(:value), '%')")
     List<User> findContainsValue (@Param("value") String value);
 
     @Query("select u from User u where u.isDeleted = :isDeleted")
