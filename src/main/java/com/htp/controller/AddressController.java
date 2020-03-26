@@ -26,10 +26,10 @@ public class AddressController {
         return new ResponseEntity<>(addressServiceImpl.findAll(), HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/admin")
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Address> createAddress(@RequestBody @Valid AdressCreateRequest request){
+    public ResponseEntity<Address> createAddressByAdmin(@RequestBody @Valid AdressCreateRequest request){
         Address address = new Address();
 
         address.setStreet(request.getStreet());
@@ -42,10 +42,10 @@ public class AddressController {
         return new ResponseEntity<>(addressServiceImpl.save(address), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/admin/{id}")
     @Transactional
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Address> updateAddress(@PathVariable("id") Long adressId,
+    public ResponseEntity<Address> updateAddressByAdmin(@PathVariable("id") Long adressId,
                                                 @RequestBody @Valid AdressCreateRequest request){
         Address address = addressServiceImpl.findById(adressId);
 
@@ -55,6 +55,39 @@ public class AddressController {
         address.setFloorNumber(request.getFloorNumber());
         address.setFlatNumber(request.getFlatNumber());
         address.setIsPizzaAddress(request.getIsPizza());
+
+        return new ResponseEntity<>(addressServiceImpl.update(address), HttpStatus.OK);
+    }
+
+    @PostMapping
+    @Transactional
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Address> createAddress(@RequestBody @Valid AdressCreateRequest request){
+        Address address = new Address();
+
+        address.setStreet(request.getStreet());
+        address.setHouseNumber(request.getHouseNumber());
+        address.setPorchNumber(request.getPorchNumber());
+        address.setFloorNumber(request.getFloorNumber());
+        address.setFlatNumber(request.getFlatNumber());
+        address.setIsPizzaAddress(false);
+
+        return new ResponseEntity<>(addressServiceImpl.save(address), HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "/{id}")
+    @Transactional
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Address> updateAddress(@PathVariable("id") Long adressId,
+                                                 @RequestBody @Valid AdressCreateRequest request){
+        Address address = addressServiceImpl.findById(adressId);
+
+        address.setStreet(request.getStreet());
+        address.setHouseNumber(request.getHouseNumber());
+        address.setPorchNumber(request.getPorchNumber());
+        address.setFloorNumber(request.getFloorNumber());
+        address.setFlatNumber(request.getFlatNumber());
+        address.setIsPizzaAddress(false);
 
         return new ResponseEntity<>(addressServiceImpl.update(address), HttpStatus.OK);
     }
