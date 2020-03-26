@@ -38,10 +38,9 @@ public class OrderGoodServiceImpl implements OrderGoodService {
         orderGoodRepository.deleteById(id);
     }
 
-    @Transactional
     @Override
     public OrderGood findById(Long id) {
-        return orderGoodRepository.getOne(id);
+        return orderGoodRepository.findById(id).get();
     }
 
     @Override

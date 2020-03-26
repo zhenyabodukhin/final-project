@@ -38,10 +38,9 @@ public class RoleServiceImpl implements RoleService {
         roleRepository.deleteById(id);
     }
 
-    @Transactional
     @Override
     public Role findById(Long id) {
-        return roleRepository.getOne(id);
+        return roleRepository.findById(id).get();
     }
 
     @Override

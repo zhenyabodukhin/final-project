@@ -22,7 +22,7 @@ public interface OrderService {
 
     List<Order> findIsDone(Boolean value);
 
-    List<Order> findByAdressId(Long id);
+    List<Order> findByAddressId(Long id);
 
     List<Order> findByPhoneNumber(String phoneNumber);
 

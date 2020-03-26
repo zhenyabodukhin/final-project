@@ -18,8 +18,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("select o from Order o where o.isDone=:isDone")
     List<Order> findIsDone(@Param("isDone") Boolean value);
 
-    @Query("select o from Order o where o.adressId=:adressId")
-    List<Order> findByAdressId(@Param("adressId") Long id);
+    @Query("select o from Order o where o.addressId=:addressId")
+    List<Order> findByAddressId(@Param("addressId") Long id);
 
     @Query("select o from Order o where o.phoneNumber=:phoneNumber")
     List<Order> findByPhoneNumber(@Param("phoneNumber") String phoneNumber);

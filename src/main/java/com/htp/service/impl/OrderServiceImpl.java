@@ -39,10 +39,9 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.deleteById(id);
     }
 
-    @Transactional
     @Override
     public Order findById(Long id) {
-        return orderRepository.getOne(id);
+        return orderRepository.findById(id).get();
     }
 
     @Transactional
@@ -62,8 +61,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findByAdressId(Long id) {
-        return orderRepository.findByAdressId(id);
+    public List<Order> findByAddressId(Long id) {
+        return orderRepository.findByAddressId(id);
     }
 
     @Override

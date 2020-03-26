@@ -15,7 +15,6 @@ public class GoodServiceImpl implements GoodService {
     @Autowired
     GoodRepository goodRepository;
 
-
     @Override
     public List<Good> findAll() {
         return goodRepository.findAll();
@@ -39,10 +38,9 @@ public class GoodServiceImpl implements GoodService {
         goodRepository.deleteById(id);
     }
 
-    @Transactional
     @Override
     public Good findById(Long id) {
-        return goodRepository.getOne(id);
+        return goodRepository.findById(id).get();
     }
 
     @Override
