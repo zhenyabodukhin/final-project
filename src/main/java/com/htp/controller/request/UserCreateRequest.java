@@ -2,6 +2,11 @@ package com.htp.controller.request;
 
 import lombok.*;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.sql.Timestamp;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -9,10 +14,20 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 public class UserCreateRequest {
-    //TODO
+
+    @NotEmpty
+    @NotNull
+    @Size(min = 2, max = 50)
     private String login;
 
+    @NotEmpty
+    @NotNull
+    @Size(min = 6, max = 50)
     private String password;
+
+    private Timestamp created;
+
+    private Timestamp changed;
 
     private Boolean isDeleted;
 }

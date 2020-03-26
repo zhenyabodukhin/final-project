@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
+import java.sql.Timestamp;
 
 @Setter
 @Getter
@@ -18,6 +19,8 @@ public class OrderCreateRequest {
 
     @Min(1)
     private Long addressId;
+
+    private Timestamp time;
 
     @Pattern(regexp = "^((\\+3|7|5)+([0-9]){10})$")
     private String phoneNumber;
