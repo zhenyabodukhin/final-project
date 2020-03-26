@@ -15,7 +15,6 @@ public class GoodServiceImpl implements GoodService {
     @Autowired
     GoodRepository goodRepository;
 
-
     @Override
     public List<Good> findAll() {
         return goodRepository.findAll();

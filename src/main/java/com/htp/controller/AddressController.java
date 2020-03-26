@@ -43,6 +43,7 @@ public class AddressController {
     }
 
     @PutMapping(value = "/{id}")
+    @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Address> updateAddress(@PathVariable("id") Long adressId,
                                                 @RequestBody @Valid AdressCreateRequest request){
@@ -59,6 +60,7 @@ public class AddressController {
     }
 
     @DeleteMapping("/{id}")
+    @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Long> deleteAddress(@PathVariable("id") Long adressId){
         addressServiceImpl.delete(adressId);
@@ -66,10 +68,9 @@ public class AddressController {
     }
 
     @GetMapping("/{id}")
-    @Transactional
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Address> getAddressById(@PathVariable("id") Long adressId) {
-        return new ResponseEntity<>(addressServiceImpl.findById(adressId), HttpStatus.OK);
+    public ResponseEntity<Address> getAddressById(@PathVariable("id") Long addressId) {
+        return new ResponseEntity<>(addressServiceImpl.findById(addressId), HttpStatus.OK);
     }
 
     @GetMapping("/search")

@@ -36,5 +36,4 @@ public class AdressCreateRequest {
 
     private Boolean isPizza;
 
-
 }
