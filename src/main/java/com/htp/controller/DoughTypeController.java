@@ -2,7 +2,7 @@ package com.htp.controller;
 
 import com.htp.controller.request.DoughTypeCreateRequest;
 import com.htp.domain.DoughType;
-import com.htp.service.DoughTypeService;
+import com.htp.service.impl.DoughTypeServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +18,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DoughTypeController {
 
-    private final DoughTypeService doughTypeService;
+    private final DoughTypeServiceImpl doughTypeServiceImpl;
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<DoughType>> getDoughTypes() {
-        return new ResponseEntity<>(doughTypeService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(doughTypeServiceImpl.findAll(), HttpStatus.OK);
     }
 
     @PostMapping
@@ -35,7 +35,7 @@ public class DoughTypeController {
         doughType.setDoughType(request.getType());
         doughType.setPriceId(request.getPriceId());
 
-        return new ResponseEntity<>(doughTypeService.save(doughType), HttpStatus.CREATED);
+        return new ResponseEntity<>(doughTypeServiceImpl.save(doughType), HttpStatus.CREATED);
     }
 
     @PutMapping(value ="/{id}")
@@ -43,25 +43,25 @@ public class DoughTypeController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<DoughType> updateDoughType(@PathVariable("id") Long doughTypeId,
                                                      @RequestBody @Valid DoughTypeCreateRequest request) {
-        DoughType doughType = doughTypeService.findById(doughTypeId);
+        DoughType doughType = doughTypeServiceImpl.findById(doughTypeId);
 
         doughType.setDoughType(request.getType());
         doughType.setPriceId(request.getPriceId());
 
-        return new ResponseEntity<>(doughTypeService.update(doughType), HttpStatus.CREATED);
+        return new ResponseEntity<>(doughTypeServiceImpl.update(doughType), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Long> deleteDoughType(@PathVariable("id") Long doughTypeId){
-        doughTypeService.delete(doughTypeId);
+        doughTypeServiceImpl.delete(doughTypeId);
         return new ResponseEntity<>(doughTypeId, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<DoughType> getDoughTypeById(@PathVariable("id") Long doughTypeId) {
-        return new ResponseEntity<>(doughTypeService.findById(doughTypeId), HttpStatus.OK);
+        return new ResponseEntity<>(doughTypeServiceImpl.findById(doughTypeId), HttpStatus.OK);
     }
 }

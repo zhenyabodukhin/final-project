@@ -2,7 +2,7 @@ package com.htp.controller;
 
 import com.htp.controller.request.GoodCreateRequest;
 import com.htp.domain.Good;
-import com.htp.service.GoodService;
+import com.htp.service.impl.GoodServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +18,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GoodController {
 
-    private final GoodService goodService;
+    private final GoodServiceImpl goodServiceImpl;
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Good>> getGoods() {
-        return new ResponseEntity<>(goodService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(goodServiceImpl.findAll(), HttpStatus.OK);
     }
 
     @PostMapping
@@ -38,15 +38,15 @@ public class GoodController {
         good.setSizeId(request.getSizeId());
         good.setDoughId(request.getDoughId());
 
-        return new ResponseEntity<>(goodService.save(good), HttpStatus.CREATED);
+        return new ResponseEntity<>(goodServiceImpl.save(good), HttpStatus.CREATED);
     }
 
-    @PutMapping(value ="/{id}")
+    @PutMapping(value = "/{id}")
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Good> updateGood(@PathVariable("id") Long goodId,
-                                                     @RequestBody @Valid GoodCreateRequest request) {
-        Good good = goodService.findById(goodId);
+                                           @RequestBody @Valid GoodCreateRequest request) {
+        Good good = goodServiceImpl.findById(goodId);
 
         good.setGoodName(request.getGoodName());
         good.setPriceId(request.getPriceId());
@@ -54,26 +54,26 @@ public class GoodController {
         good.setSizeId(request.getSizeId());
         good.setDoughId(request.getDoughId());
 
-        return new ResponseEntity<>(goodService.update(good), HttpStatus.CREATED);
+        return new ResponseEntity<>(goodServiceImpl.update(good), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Long> deleteGood(@PathVariable("id") Long goodId) {
-        goodService.delete(goodId);
+        goodServiceImpl.delete(goodId);
         return new ResponseEntity<>(goodId, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Good> getGoodById(@PathVariable("id") Long goodId) {
-        return new ResponseEntity<>(goodService.findById(goodId), HttpStatus.OK);
+        return new ResponseEntity<>(goodServiceImpl.findById(goodId), HttpStatus.OK);
     }
 
     @GetMapping("/search")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Good> getGoodByName(String name) {
-        return new ResponseEntity<>(goodService.findGoodByName(name), HttpStatus.OK);
+        return new ResponseEntity<>(goodServiceImpl.findGoodByName(name), HttpStatus.OK);
     }
 }

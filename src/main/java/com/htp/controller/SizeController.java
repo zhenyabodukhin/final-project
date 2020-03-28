@@ -1,12 +1,15 @@
 package com.htp.controller;
 
+import com.htp.controller.request.SizeCreateRequest;
 import com.htp.domain.Size;
-import com.htp.service.SizeService;
+import com.htp.service.impl.SizeServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -15,9 +18,50 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SizeController {
 
-    private final SizeService sizeService;
+    private final SizeServiceImpl sizeServiceImpl;
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<Size>> getSizes() { return new ResponseEntity<>(sizeService.findAll(), HttpStatus.OK); }
+    public ResponseEntity<List<Size>> getSizes() {
+        return new ResponseEntity<>(sizeServiceImpl.findAll(), HttpStatus.OK);
+    }
+
+    @PostMapping
+    @Transactional
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Size> createSize(@RequestBody @Valid SizeCreateRequest request) {
+        Size size = new Size();
+
+        size.setSizeCount(request.getSize());
+        size.setPriceId(request.getPriceId());
+
+        return new ResponseEntity<>(sizeServiceImpl.save(size), HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "/{id}")
+    @Transactional
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Size> updateSize(@PathVariable("id") Long sizeId,
+                                           @RequestBody @Valid SizeCreateRequest request) {
+        Size size = sizeServiceImpl.findById(sizeId);
+
+        size.setSizeCount(request.getSize());
+        size.setPriceId(request.getPriceId());
+
+        return new ResponseEntity<>(sizeServiceImpl.update(size), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Long> deleteSize(@PathVariable("id") Long sizeId) {
+        sizeServiceImpl.delete(sizeId);
+        return new ResponseEntity<>(sizeId, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Size> getSizeById(@PathVariable("id") Long sizeId) {
+        return new ResponseEntity<>(sizeServiceImpl.findById(sizeId), HttpStatus.OK);
+    }
 }
