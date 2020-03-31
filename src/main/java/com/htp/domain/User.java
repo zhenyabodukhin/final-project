@@ -38,11 +38,11 @@ public class User {
     private boolean isDeleted;
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "userRole")
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "userRole")
     private Set<Role> roles = Collections.emptySet();
 
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "userOrder")
-    private Set<Order> orders = Collections.emptySet();
+//    @JsonManagedReference
+//    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "userOrder")
+//    private Set<Order> orders = Collections.emptySet();
 
 }

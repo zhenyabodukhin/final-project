@@ -1,12 +1,9 @@
 package com.htp.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collections;
-import java.util.Set;
 
 @Entity
 @Table(name = "m_size")
@@ -28,12 +25,12 @@ public class Size {
     @Column(name = "price_id")
     private Long priceId;
 
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "sizeGood")
-    private Set<Good> goods = Collections.emptySet();
+//    @JsonManagedReference
+//    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "sizeGood")
+//    private Set<Good> goods = Collections.emptySet();
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "price_id", insertable = false, updatable = false)
     private Price priceSize;
 }

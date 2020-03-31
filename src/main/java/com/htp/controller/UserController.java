@@ -53,7 +53,6 @@ public class UserController {
         user.setLogin(request.getLogin());
         user.setPassword(request.getPassword());
         user.setChanged(new Timestamp(new Date().getTime()));
-        user.setDeleted(request.getIsDeleted());
 
         return new ResponseEntity<>(userServiceImpl.update(user), HttpStatus.CREATED);
     }
@@ -62,7 +61,11 @@ public class UserController {
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Long> deleteUser(@PathVariable("id") Long userId) {
+        User user = userServiceImpl.findById(userId);
+
         userServiceImpl.delete(userId);
+        user.setChanged(new Timestamp(new Date().getTime()));
+
         return new ResponseEntity<>(userId, HttpStatus.OK);
     }
 

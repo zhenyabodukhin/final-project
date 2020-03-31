@@ -29,11 +29,11 @@ public class DoughType {
     private Long priceId;
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "doughTypeGood")
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "doughTypeGood")
     private Set<Good> goods = Collections.emptySet();
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "price_id", insertable = false, updatable = false)
     private Price priceDoughType;
 }

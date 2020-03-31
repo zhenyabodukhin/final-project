@@ -40,6 +40,6 @@ public class Address {
     private Boolean isPizzaAddress;
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "addressOrder")
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "addressOrder")
     private Set<Order> orders = Collections.emptySet();
 }
