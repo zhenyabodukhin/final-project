@@ -42,4 +42,9 @@ public class PriceServiceImpl implements PriceService {
     public Price findById(Long id) {
         return priceRepository.findById(id).get();
     }
+
+    @Override
+    public Price findPriceByValue(Double value) {
+        return priceRepository.findPriceByValue(value);
+    }
 }

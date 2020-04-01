@@ -38,6 +38,9 @@ public class Good {
     @Column(name = "dough_id")
     private Long doughId;
 
+    @Column(name = "ingredients")
+    private String ingredients;
+
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "good")
     private Set<OrderGood> orderGoods = Collections.emptySet();
