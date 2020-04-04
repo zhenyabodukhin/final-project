@@ -1,16 +1,13 @@
 package com.htp.controller;
 
-import com.htp.controller.request.BucketPutRequest;
 import com.htp.controller.request.CustomGoodCreateRequest;
 import com.htp.controller.request.GoodCreateRequest;
 import com.htp.controller.request.GoodUpdateRequest;
-import com.htp.domain.Bucket;
 import com.htp.domain.Good;
 import com.htp.service.impl.GoodServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +21,6 @@ import java.util.List;
 public class GoodController {
 
     private final GoodServiceImpl goodServiceImpl;
-
-    private final Bucket bucket;
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
@@ -54,15 +49,6 @@ public class GoodController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Good> createCustomGood(@RequestBody @Valid CustomGoodCreateRequest request) {
         return new ResponseEntity<>(goodServiceImpl.createCustomGood(request), HttpStatus.CREATED);
-    }
-
-    @Async
-    @PostMapping("/bucket")
-    @Transactional
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Integer> bucket(@RequestBody @Valid BucketPutRequest request) {
-        bucket.putIntoBucket(request.getGoodId(), request.getCount());
-        return new ResponseEntity<>(bucket.getSize(), HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}")
