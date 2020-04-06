@@ -4,17 +4,17 @@ package com.htp.service.impl;
 import com.htp.domain.Order;
 import com.htp.repository.OrderRepository;
 import com.htp.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service("OrderServiceImpl")
+@Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-    @Autowired
-    OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
     @Override
     public List<Order> findAll() {

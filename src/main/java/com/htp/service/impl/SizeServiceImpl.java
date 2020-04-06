@@ -3,17 +3,17 @@ package com.htp.service.impl;
 import com.htp.domain.Size;
 import com.htp.repository.SizeRepository;
 import com.htp.service.SizeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service("SizeServiceImpl")
+@Service
+@RequiredArgsConstructor
 public class SizeServiceImpl implements SizeService {
 
-    @Autowired
-    SizeRepository sizeRepository;
+    private final SizeRepository sizeRepository;
 
     @Override
     public List<Size> findAll() {

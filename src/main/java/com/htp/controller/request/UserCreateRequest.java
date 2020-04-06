@@ -16,7 +16,7 @@ public class UserCreateRequest {
 
     @NotEmpty
     @NotNull
-    @Size(min = 2, max = 50)
+    @Size(min = 6, max = 20)
     private String login;
 
     @NotEmpty

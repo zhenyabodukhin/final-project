@@ -3,17 +3,17 @@ package com.htp.service.impl;
 import com.htp.domain.OrderGood;
 import com.htp.repository.OrderGoodRepository;
 import com.htp.service.OrderGoodService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service("OrderGoodServiceImpl")
+@Service
+@RequiredArgsConstructor
 public class OrderGoodServiceImpl implements OrderGoodService {
 
-    @Autowired
-    OrderGoodRepository orderGoodRepository;
+    private final OrderGoodRepository orderGoodRepository;
 
     @Override
     public List<OrderGood> findAll() {

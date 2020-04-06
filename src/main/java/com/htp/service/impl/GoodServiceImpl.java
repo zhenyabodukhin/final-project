@@ -5,7 +5,7 @@ import com.htp.domain.Good;
 import com.htp.domain.Price;
 import com.htp.repository.GoodRepository;
 import com.htp.service.GoodService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,14 +13,13 @@ import java.util.List;
 
 import static com.htp.enums.Ingredients.*;
 
-@Service("GoodServiceImpl")
+@Service
+@RequiredArgsConstructor
 public class GoodServiceImpl implements GoodService {
 
-    @Autowired
-    GoodRepository goodRepository;
+    private final GoodRepository goodRepository;
 
-    @Autowired
-    PriceServiceImpl priceService;
+    private final PriceServiceImpl priceService;
 
     @Override
     public List<Good> findAll() {

@@ -3,17 +3,17 @@ package com.htp.service.impl;
 import com.htp.domain.Price;
 import com.htp.repository.PriceRepository;
 import com.htp.service.PriceService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service("PriceServiceImpl")
+@Service
+@RequiredArgsConstructor
 public class PriceServiceImpl implements PriceService {
 
-    @Autowired
-    private PriceRepository priceRepository;
+    private final PriceRepository priceRepository;
 
     @Override
     public List<Price> findAll() {

@@ -6,6 +6,7 @@ import com.htp.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,8 @@ public class UserController {
 
     private final UserServiceImpl userServiceImpl;
 
+    private final PasswordEncoder passwordEncoder;
+
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<User>> getUsers() {
@@ -35,7 +38,7 @@ public class UserController {
         User user = new User();
 
         user.setLogin(request.getLogin());
-        user.setPassword(request.getPassword());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setCreated(new Timestamp(new Date().getTime()));
         user.setChanged(new Timestamp(new Date().getTime()));
         user.setDeleted(false);
@@ -51,7 +54,7 @@ public class UserController {
         User user = userServiceImpl.findById(userId);
 
         user.setLogin(request.getLogin());
-        user.setPassword(request.getPassword());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setChanged(new Timestamp(new Date().getTime()));
 
         return new ResponseEntity<>(userServiceImpl.update(user), HttpStatus.CREATED);

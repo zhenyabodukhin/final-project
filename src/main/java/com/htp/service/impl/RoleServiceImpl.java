@@ -3,17 +3,17 @@ package com.htp.service.impl;
 import com.htp.domain.Role;
 import com.htp.repository.RoleRepository;
 import com.htp.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service("RoleServiceImpl")
+@Service
+@RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
 
-    @Autowired
-    RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
     @Override
     public List<Role> findAll() {

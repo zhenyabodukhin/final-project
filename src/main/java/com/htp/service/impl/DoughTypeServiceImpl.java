@@ -3,17 +3,17 @@ package com.htp.service.impl;
 import com.htp.domain.DoughType;
 import com.htp.repository.DoughTypeRepository;
 import com.htp.service.DoughTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service("DoughTypeServiceImpl")
+@Service
+@RequiredArgsConstructor
 public class DoughTypeServiceImpl implements DoughTypeService {
 
-    @Autowired
-    private DoughTypeRepository doughTypeRepository;
+    private final DoughTypeRepository doughTypeRepository;
 
     @Override
     public List<DoughType> findAll() {

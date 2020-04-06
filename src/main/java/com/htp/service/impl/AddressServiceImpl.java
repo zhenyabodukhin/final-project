@@ -3,17 +3,17 @@ package com.htp.service.impl;
 import com.htp.domain.Address;
 import com.htp.repository.AddressRepository;
 import com.htp.service.AddressService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service("AddressServiceImpl")
+@Service
+@RequiredArgsConstructor
 public class AddressServiceImpl implements AddressService {
 
-    @Autowired
-    private AddressRepository addressRepository;
+    private final AddressRepository addressRepository;
 
 
     @Override
@@ -24,7 +24,7 @@ public class AddressServiceImpl implements AddressService {
     @Transactional
     @Override
     public Address save(Address address) {
-       return addressRepository.save(address);
+        return addressRepository.save(address);
     }
 
     @Transactional

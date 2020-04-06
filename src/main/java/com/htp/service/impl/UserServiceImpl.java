@@ -4,17 +4,17 @@ package com.htp.service.impl;
 import com.htp.domain.User;
 import com.htp.repository.UserRepository;
 import com.htp.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service("UserServiceImpl")
+@Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public List<User> findAll() {

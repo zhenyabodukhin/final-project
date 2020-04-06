@@ -4,8 +4,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.dbcp.BasicDataSource;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Scope;
 
 import java.util.Objects;
 
@@ -13,25 +16,19 @@ import java.util.Objects;
 @Getter
 @NoArgsConstructor
 @Configuration
-@PropertySource("classpath:application.properties")
+@ConfigurationProperties("datasource")
 public class DatabaseConfig {
 
-    @Value("${driver}")
     private String driverName;
 
-    @Value("${url}")
     private String url;
 
-    @Value("${login}")
     private String login;
 
-    @Value("${password}")
     private String password;
 
-    @Value("${initial-size}")
     private String initialSize;
 
-    @Value("${max-active}")
     private String maxActive;
 
     @Bean(value = "dataSource", destroyMethod = "close")

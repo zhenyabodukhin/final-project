@@ -1,10 +1,10 @@
-package com.htp.service.impl.security;
+package com.htp.security.service;
 
 import com.htp.domain.Role;
 import com.htp.domain.User;
 import com.htp.service.RoleService;
 import com.htp.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,15 +14,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service(value = "userDetailsService")
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    //@Qualifier("userService")
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    //@Qualifier("roleService")
-    private RoleService roleService;
+    private final RoleService roleService;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
