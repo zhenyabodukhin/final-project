@@ -6,5 +6,5 @@ datasource:
   initialSize: 10
   maxActive: 7
 jwttoken:
-  secret: secretB
-  expire: 63072000000
+  secret: secretBod
+  expire: 2140000000

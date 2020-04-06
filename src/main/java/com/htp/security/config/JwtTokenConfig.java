@@ -15,5 +15,5 @@ public class JwtTokenConfig {
 
     private String secret;
 
-    private String expire;
+    private Integer expire;
 }
