@@ -1,7 +1,8 @@
 package com.htp.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -11,49 +12,36 @@ import java.util.Map;
 
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Bucket {
 
-    private Map<String, String> bucket = new HashMap<>();
+    private Map<Long, Integer> bucketMap = new HashMap<>();
 
-    public Integer putIntoBucket(String goodId, String count) {
-        if (bucket.containsKey(goodId)) {
-            int newCount = Integer.parseInt(count) + 1;
-            bucket.replace(goodId, count, Integer.toString(newCount));
+    public Map<Long, Integer> putIntoBucket(Long goodId, Integer count) {
+        if (bucketMap.containsKey(goodId)) {
+            bucketMap.replace(goodId, count + 1);
         } else {
-            bucket.put(goodId, count);
+            bucketMap.put(goodId, count);
         }
-        return bucket.size();
+        return bucketMap;
     }
 
     public void clearBucket() {
-        bucket.clear();
+        bucketMap.clear();
     }
 
-    public void deleteItem(String goodId) {
-        bucket.remove(goodId);
+    public Map<Long, Integer> deleteItem(Long goodId) {
+        bucketMap.remove(goodId);
+        return bucketMap;
     }
 
     public Integer getSize() {
-        return bucket.size();
+        return bucketMap.size();
     }
 
-    public void showItemsInBucket() {
-        System.out.println(bucket.toString());
+    public Map<Long, Integer> showItemsInBucket() {
+        return bucketMap;
     }
-
-//    @Override
-//    public String toString() {
-//        ObjectMapper objectMapper = new ObjectMapper();
-//
-//        String json = null;
-//        try {
-//            json = objectMapper.writeValueAsString(bucket);
-//        } catch (JsonProcessingException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return json;
-//    }
 }

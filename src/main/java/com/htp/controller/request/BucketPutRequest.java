@@ -2,6 +2,8 @@ package com.htp.controller.request;
 
 import lombok.*;
 
+import javax.validation.constraints.Min;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -10,10 +12,9 @@ import lombok.*;
 @ToString
 public class BucketPutRequest {
 
+    @Min(1)
+    private Long goodId;
 
-    private String goodId;
-
-
-    private String count;
-
+    @Min(1)
+    private Integer count;
 }

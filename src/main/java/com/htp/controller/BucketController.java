@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -21,9 +22,8 @@ public class BucketController {
     @PostMapping
     @Transactional
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Integer> putIntoBucket(@RequestBody @Valid BucketPutRequest request) {
-        bucket.putIntoBucket(request.getGoodId(), request.getCount());
-        return new ResponseEntity<>(bucket.getSize(), HttpStatus.OK);
+    public ResponseEntity<Map<Long, Integer>> putIntoBucket(@RequestBody @Valid BucketPutRequest request) {
+        return new ResponseEntity<>(bucket.putIntoBucket(request.getGoodId(), request.getCount()), HttpStatus.OK);
     }
 
     @DeleteMapping
@@ -37,15 +37,14 @@ public class BucketController {
     @DeleteMapping("/id")
     @Transactional
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Integer> deleteItem(String goodId) {
-        bucket.deleteItem(goodId);
-        return new ResponseEntity<>(bucket.getSize(), HttpStatus.OK);
+    public ResponseEntity<Map<Long, Integer>> deleteItem(Long goodId) {
+        return new ResponseEntity<>(bucket.deleteItem(goodId), HttpStatus.OK);
     }
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public void showBucketItems() {
-        bucket.showItemsInBucket();
+    public ResponseEntity<Map<Long, Integer>> showBucketItems() {
+        return new ResponseEntity<>(bucket.showItemsInBucket(), HttpStatus.OK);
     }
 
     @GetMapping("/size")
