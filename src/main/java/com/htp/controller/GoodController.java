@@ -5,6 +5,8 @@ import com.htp.controller.request.GoodCreateRequest;
 import com.htp.controller.request.GoodUpdateRequest;
 import com.htp.domain.Good;
 import com.htp.service.impl.GoodServiceImpl;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,12 +25,18 @@ public class GoodController {
     private final GoodServiceImpl goodServiceImpl;
 
     @GetMapping("/all")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Good>> getGoods() {
         return new ResponseEntity<>(goodServiceImpl.findAll(), HttpStatus.OK);
     }
 
     @PostMapping
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Good> createGood(@RequestBody @Valid GoodCreateRequest request) {
@@ -45,6 +53,9 @@ public class GoodController {
     }
 
     @PostMapping("/custom")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Good> createCustomGood(@RequestBody @Valid CustomGoodCreateRequest request) {
@@ -52,6 +63,9 @@ public class GoodController {
     }
 
     @PutMapping(value = "/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Good> updateGood(@PathVariable("id") Long goodId,
@@ -69,6 +83,9 @@ public class GoodController {
     }
 
     @DeleteMapping("/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Long> deleteGood(@PathVariable("id") Long goodId) {
@@ -77,12 +94,18 @@ public class GoodController {
     }
 
     @GetMapping("/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Good> getGoodById(@PathVariable("id") Long goodId) {
         return new ResponseEntity<>(goodServiceImpl.findById(goodId), HttpStatus.OK);
     }
 
     @GetMapping("/search")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Good> getGoodByName(String name) {
         return new ResponseEntity<>(goodServiceImpl.findGoodByName(name), HttpStatus.OK);

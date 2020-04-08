@@ -3,6 +3,8 @@ package com.htp.controller;
 import com.htp.controller.request.PriceCreateRequest;
 import com.htp.domain.Price;
 import com.htp.service.impl.PriceServiceImpl;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +23,18 @@ public class PriceController {
     private final PriceServiceImpl priceServiceImpl;
 
     @GetMapping("/all")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Price>> getPrices() {
         return new ResponseEntity<>(priceServiceImpl.findAll(), HttpStatus.OK);
     }
 
     @PostMapping
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Price> createPrice(@RequestBody @Valid PriceCreateRequest request) {
@@ -38,6 +46,9 @@ public class PriceController {
     }
 
     @PutMapping(value = "/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Price> updatePrice(@PathVariable("id") Long priceId,
@@ -50,6 +61,9 @@ public class PriceController {
     }
 
     @DeleteMapping("/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Long> deletePrice(@PathVariable("id") Long priceId) {
@@ -58,6 +72,9 @@ public class PriceController {
     }
 
     @GetMapping("/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Price> getPriceById(@PathVariable("id") Long priceId) {
         return new ResponseEntity<>(priceServiceImpl.findById(priceId), HttpStatus.OK);

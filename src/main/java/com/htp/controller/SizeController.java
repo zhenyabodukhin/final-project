@@ -3,6 +3,8 @@ package com.htp.controller;
 import com.htp.controller.request.SizeCreateRequest;
 import com.htp.domain.Size;
 import com.htp.service.impl.SizeServiceImpl;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +23,18 @@ public class SizeController {
     private final SizeServiceImpl sizeServiceImpl;
 
     @GetMapping("/all")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Size>> getSizes() {
         return new ResponseEntity<>(sizeServiceImpl.findAll(), HttpStatus.OK);
     }
 
     @PostMapping
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Size> createSize(@RequestBody @Valid SizeCreateRequest request) {
@@ -39,6 +47,9 @@ public class SizeController {
     }
 
     @PutMapping(value = "/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Size> updateSize(@PathVariable("id") Long sizeId,
@@ -52,6 +63,9 @@ public class SizeController {
     }
 
     @DeleteMapping("/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Long> deleteSize(@PathVariable("id") Long sizeId) {
@@ -60,6 +74,9 @@ public class SizeController {
     }
 
     @GetMapping("/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Size> getSizeById(@PathVariable("id") Long sizeId) {
         return new ResponseEntity<>(sizeServiceImpl.findById(sizeId), HttpStatus.OK);

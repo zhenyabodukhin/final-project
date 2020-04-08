@@ -3,6 +3,8 @@ package com.htp.controller;
 import com.htp.controller.request.RoleCreateRequest;
 import com.htp.domain.Role;
 import com.htp.service.impl.RoleServiceImpl;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +23,18 @@ public class RoleController {
     private final RoleServiceImpl roleServiceImpl;
 
     @GetMapping("/all")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Role>> getRoles() {
         return new ResponseEntity<>(roleServiceImpl.findAll(), HttpStatus.OK);
     }
 
     @PostMapping
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Role> createRole(@RequestBody @Valid RoleCreateRequest request) {
@@ -39,6 +47,9 @@ public class RoleController {
     }
 
     @PutMapping(value = "/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Role> updateRole(@PathVariable("id") Long roleId,
@@ -52,6 +63,9 @@ public class RoleController {
     }
 
     @DeleteMapping("/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Long> deleteRole(@PathVariable("id") Long roleId) {
@@ -60,12 +74,18 @@ public class RoleController {
     }
 
     @GetMapping("/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Role> getRoleById(@PathVariable("id") Long roleId) {
         return new ResponseEntity<>(roleServiceImpl.findById(roleId), HttpStatus.OK);
     }
 
     @GetMapping("/user/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Role>> getRoleByUserId(@PathVariable("id") Long userId) {
         return new ResponseEntity<>(roleServiceImpl.findByUserId(userId), HttpStatus.OK);

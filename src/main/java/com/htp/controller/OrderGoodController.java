@@ -3,6 +3,8 @@ package com.htp.controller;
 import com.htp.controller.request.OrderGoodCreateRequest;
 import com.htp.domain.OrderGood;
 import com.htp.service.impl.OrderGoodServiceImpl;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +23,18 @@ public class OrderGoodController {
     private final OrderGoodServiceImpl orderGoodServiceImpl;
 
     @GetMapping("/all")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<OrderGood>> getOrderGoods() {
         return new ResponseEntity<>(orderGoodServiceImpl.findAll(), HttpStatus.OK);
     }
 
     @PostMapping
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<OrderGood> createOrderGood(@RequestBody @Valid OrderGoodCreateRequest request) {
@@ -40,6 +48,9 @@ public class OrderGoodController {
     }
 
     @PutMapping(value = "/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<OrderGood> updateOrderGood(@PathVariable("id") Long orderGoodId,
@@ -54,6 +65,9 @@ public class OrderGoodController {
     }
 
     @DeleteMapping("/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Long> deleteOrderGood(@PathVariable("id") Long orderGoodId) {
@@ -62,12 +76,18 @@ public class OrderGoodController {
     }
 
     @GetMapping("/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<OrderGood> getOrderGoodById(@PathVariable("id") Long orderGoodId) {
         return new ResponseEntity<>(orderGoodServiceImpl.findById(orderGoodId), HttpStatus.OK);
     }
 
     @GetMapping("/order/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<OrderGood>> getOrderGoodByOrderId(@PathVariable("id") Long orderId) {
         return new ResponseEntity<>(orderGoodServiceImpl.findByOrderId(orderId), HttpStatus.OK);

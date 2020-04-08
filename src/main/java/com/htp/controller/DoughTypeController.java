@@ -3,6 +3,8 @@ package com.htp.controller;
 import com.htp.controller.request.DoughTypeCreateRequest;
 import com.htp.domain.DoughType;
 import com.htp.service.impl.DoughTypeServiceImpl;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +23,18 @@ public class DoughTypeController {
     private final DoughTypeServiceImpl doughTypeServiceImpl;
 
     @GetMapping("/all")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<DoughType>> getDoughTypes() {
         return new ResponseEntity<>(doughTypeServiceImpl.findAll(), HttpStatus.OK);
     }
 
     @PostMapping
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<DoughType> createDoughType(@RequestBody @Valid DoughTypeCreateRequest request) {
@@ -39,6 +47,9 @@ public class DoughTypeController {
     }
 
     @PutMapping(value ="/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<DoughType> updateDoughType(@PathVariable("id") Long doughTypeId,
@@ -52,6 +63,9 @@ public class DoughTypeController {
     }
 
     @DeleteMapping("/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Long> deleteDoughType(@PathVariable("id") Long doughTypeId){
@@ -60,6 +74,9 @@ public class DoughTypeController {
     }
 
     @GetMapping("/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<DoughType> getDoughTypeById(@PathVariable("id") Long doughTypeId) {
         return new ResponseEntity<>(doughTypeServiceImpl.findById(doughTypeId), HttpStatus.OK);
