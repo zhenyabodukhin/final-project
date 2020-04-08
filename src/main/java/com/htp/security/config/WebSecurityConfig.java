@@ -1,5 +1,7 @@
 package com.htp.security.config;
 
+import com.htp.security.filter.AuthenticationTokenFilter;
+import com.htp.security.util.TokenUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +16,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @RequiredArgsConstructor
 @Configuration
@@ -23,16 +27,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
+    private final TokenUtils tokenUtils;
+
     @Autowired
-    public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+    public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder,
+                                        PasswordEncoder passwordEncoder) throws Exception {
         authenticationManagerBuilder
-                .userDetailsService(userDetailsService);
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder);
     }
 
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public AuthenticationTokenFilter authenticationTokenFilter(AuthenticationManager authenticationManager) throws Exception {
+        AuthenticationTokenFilter authenticationTokenFilter = new AuthenticationTokenFilter(tokenUtils, userDetailsService);
+        authenticationTokenFilter.setAuthenticationManager(authenticationManager);
+        return authenticationTokenFilter;
     }
 
     @Override
@@ -50,11 +65,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/actuator/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/swagger-ui.html#").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/guest/**").permitAll()
-                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/registration/**").permitAll()
+                .antMatchers("/authentication/**").permitAll()
                 .antMatchers("/rest/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
+
+        httpSecurity.addFilterBefore(authenticationTokenFilter(authenticationManagerBean()), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

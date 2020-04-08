@@ -3,6 +3,8 @@ package com.htp.controller;
 import com.htp.controller.request.UserCreateRequest;
 import com.htp.domain.User;
 import com.htp.service.impl.UserServiceImpl;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +28,18 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/all")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<User>> getUsers() {
         return new ResponseEntity<>(userServiceImpl.findAll(), HttpStatus.OK);
     }
 
     @PostMapping
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<User> createUser(@RequestBody @Valid UserCreateRequest request) {
@@ -47,6 +55,9 @@ public class UserController {
     }
 
     @PutMapping(value = "/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<User> updateUser(@PathVariable("id") Long userId,
@@ -61,6 +72,9 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Long> deleteUser(@PathVariable("id") Long userId) {
@@ -73,24 +87,36 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<User> getUserById(@PathVariable("id") Long userId) {
         return new ResponseEntity<>(userServiceImpl.findById(userId), HttpStatus.OK);
     }
 
     @GetMapping("/search/name")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<User> getUserByName(String name) {
         return new ResponseEntity<>(userServiceImpl.findByName(name), HttpStatus.OK);
     }
 
     @GetMapping("/search/value")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<User>> getUsersByValue(String value) {
         return new ResponseEntity<>(userServiceImpl.findContainsValue(value), HttpStatus.OK);
     }
 
     @GetMapping("/deleted")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<User>> getUsersDeleted(Boolean value) {
         return new ResponseEntity<>(userServiceImpl.findIsDeleted(value), HttpStatus.OK);
