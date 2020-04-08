@@ -16,33 +16,33 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Bucket {
+public class Basket {
 
-    private Map<Long, Integer> bucketMap = Collections.synchronizedMap(new LinkedHashMap<>());
+    private Map<Long, Integer> basketMap = Collections.synchronizedMap(new LinkedHashMap<>());
 
-    public Map<Long, Integer> putIntoBucket(Long goodId, Integer count) {
-        if (bucketMap.containsKey(goodId)) {
-            bucketMap.replace(goodId, count + bucketMap.get(goodId));
+    public Map<Long, Integer> putIntoBasket(Long goodId, Integer count) {
+        if (basketMap.containsKey(goodId)) {
+            basketMap.replace(goodId, count + basketMap.get(goodId));
         } else {
-            bucketMap.put(goodId, count);
+            basketMap.put(goodId, count);
         }
-        return bucketMap;
+        return basketMap;
     }
 
-    public void clearBucket() {
-        bucketMap.clear();
+    public void clearBasket() {
+        basketMap.clear();
     }
 
     public Map<Long, Integer> deleteItem(Long goodId) {
-        bucketMap.remove(goodId);
-        return bucketMap;
+        basketMap.remove(goodId);
+        return basketMap;
     }
 
     public Integer getSize() {
-        return bucketMap.size();
+        return basketMap.size();
     }
 
-    public Map<Long, Integer> showItemsInBucket() {
-        return bucketMap;
+    public Map<Long, Integer> showItemsInBasket() {
+        return basketMap;
     }
 }

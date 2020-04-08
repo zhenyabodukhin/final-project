@@ -1,7 +1,7 @@
 package com.htp.controller;
 
 import com.htp.controller.request.BucketPutRequest;
-import com.htp.domain.Bucket;
+import com.htp.domain.Basket;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +15,11 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/rest/bucket")
+@RequestMapping(value = "/rest/basket")
 @RequiredArgsConstructor
-public class BucketController {
+public class BasketController {
 
-    private final Bucket bucket;
+    private final Basket basket;
 
     @PostMapping
     @ApiImplicitParams({
@@ -28,7 +28,7 @@ public class BucketController {
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Map<Long, Integer>> putIntoBucket(@RequestBody @Valid BucketPutRequest request) {
-        return new ResponseEntity<>(bucket.putIntoBucket(request.getGoodId(), request.getCount()), HttpStatus.OK);
+        return new ResponseEntity<>(basket.putIntoBasket(request.getGoodId(), request.getCount()), HttpStatus.OK);
     }
 
     @DeleteMapping
@@ -38,8 +38,8 @@ public class BucketController {
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Integer> deleteAllItems() {
-        bucket.clearBucket();
-        return new ResponseEntity<>(bucket.getSize(), HttpStatus.OK);
+        basket.clearBasket();
+        return new ResponseEntity<>(basket.getSize(), HttpStatus.OK);
     }
 
     @DeleteMapping("/id")
@@ -49,7 +49,7 @@ public class BucketController {
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Map<Long, Integer>> deleteItem(Long goodId) {
-        return new ResponseEntity<>(bucket.deleteItem(goodId), HttpStatus.OK);
+        return new ResponseEntity<>(basket.deleteItem(goodId), HttpStatus.OK);
     }
 
     @GetMapping("/all")
@@ -58,7 +58,7 @@ public class BucketController {
     })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Map<Long, Integer>> showBucketItems() {
-        return new ResponseEntity<>(bucket.showItemsInBucket(), HttpStatus.OK);
+        return new ResponseEntity<>(basket.showItemsInBasket(), HttpStatus.OK);
     }
 
     @GetMapping("/size")
@@ -67,7 +67,7 @@ public class BucketController {
     })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Integer> bucketSize() {
-        return new ResponseEntity<>(bucket.getSize(), HttpStatus.OK);
+        return new ResponseEntity<>(basket.getSize(), HttpStatus.OK);
     }
 
 }
