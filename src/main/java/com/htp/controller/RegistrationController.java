@@ -1,7 +1,9 @@
 package com.htp.controller;
 
 import com.htp.controller.request.UserCreateRequest;
+import com.htp.domain.Role;
 import com.htp.domain.User;
+import com.htp.service.impl.RoleServiceImpl;
 import com.htp.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,8 @@ public class RegistrationController {
 
     private final UserServiceImpl userServiceImpl;
 
+    private final RoleServiceImpl roleService;
+
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping
@@ -35,6 +39,15 @@ public class RegistrationController {
         user.setChanged(new Timestamp(new Date().getTime()));
         user.setDeleted(false);
 
-        return new ResponseEntity<>(userServiceImpl.save(user), HttpStatus.CREATED);
+        User createdUser = userServiceImpl.save(user);
+
+        Role role = new Role();
+
+        role.setUserId(createdUser.getId());
+        role.setRole("ROLE_USER");
+
+        roleService.save(role);
+
+        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 }
