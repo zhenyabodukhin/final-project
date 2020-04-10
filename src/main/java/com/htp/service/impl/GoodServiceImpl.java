@@ -3,6 +3,7 @@ package com.htp.service.impl;
 import com.htp.controller.request.CustomGoodCreateRequest;
 import com.htp.domain.Good;
 import com.htp.domain.Price;
+import com.htp.exception.EntityNotFoundException;
 import com.htp.repository.GoodRepository;
 import com.htp.service.GoodService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.htp.enums.Ingredients.*;
 
@@ -41,12 +43,21 @@ public class GoodServiceImpl implements GoodService {
     @Transactional
     @Override
     public void delete(Long id) {
-        goodRepository.deleteById(id);
+        if (goodRepository.findById(id).isPresent()) {
+            goodRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException(Good.class, id);
+        }
     }
 
     @Override
     public Good findById(Long id) {
-        return goodRepository.findById(id).get();
+        Optional<Good> result = goodRepository.findById(id);
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            throw new EntityNotFoundException(Good.class, id);
+        }
     }
 
     @Override

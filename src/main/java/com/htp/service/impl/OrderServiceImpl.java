@@ -2,6 +2,7 @@ package com.htp.service.impl;
 
 
 import com.htp.domain.Order;
+import com.htp.exception.EntityNotFoundException;
 import com.htp.repository.OrderRepository;
 import com.htp.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,12 +38,21 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public void delete(Long id) {
-        orderRepository.deleteById(id);
+        if (orderRepository.findById(id).isPresent()) {
+            orderRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException(Order.class, id);
+        }
     }
 
     @Override
     public Order findById(Long id) {
-        return orderRepository.findById(id).get();
+        Optional<Order> result = orderRepository.findById(id);
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            throw new EntityNotFoundException(Order.class, id);
+        }
     }
 
     @Transactional

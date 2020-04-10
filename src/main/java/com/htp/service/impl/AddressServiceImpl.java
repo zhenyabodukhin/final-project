@@ -1,6 +1,7 @@
 package com.htp.service.impl;
 
 import com.htp.domain.Address;
+import com.htp.exception.EntityNotFoundException;
 import com.htp.repository.AddressRepository;
 import com.htp.service.AddressService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,12 +38,21 @@ public class AddressServiceImpl implements AddressService {
     @Transactional
     @Override
     public void delete(Long id) {
-        addressRepository.deleteById(id);
+        if (addressRepository.findById(id).isPresent()) {
+            addressRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException(Address.class, id);
+        }
     }
 
     @Override
     public Address findById(Long id) {
-        return addressRepository.findById(id).get();
+        Optional<Address> result = addressRepository.findById(id);
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            throw new EntityNotFoundException(Address.class, id);
+        }
     }
 
     @Override
