@@ -45,6 +45,7 @@ public class JpaConfig {
         factory.setJpaVendorAdapter(vendorAdapter);
         factory.setPackagesToScan("com.htp");
         factory.setDataSource(dataSource);
+        factory.setJpaProperties(getAdditionalProperties());
         factory.afterPropertiesSet();
 
         return factory.getObject();
@@ -79,6 +80,8 @@ public class JpaConfig {
         Properties properties = new Properties();
 
         properties.put("hibernate.show_sql", "true");
+        properties.put("hibernate.archive.autodetection", "class, hbm");
+        properties.put("hibernate.hbm2ddl.auto", "none");
         properties.put("current_session_context_class", "org.springframework.orm.hibernate5.SpringSessionContext");
         return properties;
     }

@@ -3,7 +3,7 @@ spring:
     username: postgres
     password: root
   flyway:
-    enabled: false
+    enabled: true
     ignore-missing-migrations: true
     locations: classpath:/db/migrations
     baseline-on-migrate: true
