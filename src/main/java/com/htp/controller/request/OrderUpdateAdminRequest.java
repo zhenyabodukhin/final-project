@@ -11,7 +11,7 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class OrderCreateRequest {
+public class OrderUpdateAdminRequest {
 
     @Min(1)
     private Long userId;

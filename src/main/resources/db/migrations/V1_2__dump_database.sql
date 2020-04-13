@@ -9,7 +9,7 @@ INSERT INTO m_dough_type (id, type, price_id) VALUES (3, 'Сырный борт'
 INSERT INTO m_size (id, size, price_id) VALUES (3, 36, 3);
 INSERT INTO m_size (id, size, price_id) VALUES (1, 22, 1);
 INSERT INTO m_size (id, size, price_id) VALUES (2, 28, 2);
-INSERT INTO m_goods (id, name, price_id, weight, size_id, dough_id, " ingredients", ingredients) VALUES (1, 'Сырная', 1, 0.5, 1, 1, '', null);
+INSERT INTO m_goods (id, name, price_id, weight, size_id, dough_id, ingredients) VALUES (1, 'Сырная', 1, 0.5, 1, 1, '');
 INSERT INTO m_users (id, login, password, created, changed, is_deleted) VALUES (29, 'Bodofet', '$2a$10$URX1UjIpAcIlUj2STal3wOH1eU70jFrq3RBrUgn4EHFuwwJkCJFSu', '2020-04-08 11:42:45.122000', '2020-04-08 11:42:45.122000', false);
 INSERT INTO m_users (id, login, password, created, changed, is_deleted) VALUES (30, 'Booduu', '$2a$10$i00W/zCjAKJpC5Lg6uFQhuzugDN7NeVFLFgiYbmCi2knnB5pL/Lh6', '2020-04-08 11:50:14.973000', '2020-04-08 11:50:14.973000', false);
 INSERT INTO m_users (id, login, password, created, changed, is_deleted) VALUES (31, 'Boodde', '$2a$10$fxDMJCPpdpz01CQKDyyk1O218MT4e0/yGH/zQ898052hoc0RCftq2', '2020-04-08 11:52:59.419000', '2020-04-08 11:52:59.419000', false);

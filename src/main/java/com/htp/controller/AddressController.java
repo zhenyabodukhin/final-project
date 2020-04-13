@@ -1,12 +1,14 @@
 package com.htp.controller;
 
-import com.htp.controller.request.AdressCreateRequest;
+import com.htp.controller.request.AddressCreateAdminRequest;
+import com.htp.controller.request.AddressCreateUserRequest;
 import com.htp.domain.Address;
 import com.htp.service.impl.AddressServiceImpl;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +39,7 @@ public class AddressController {
     }
 
     @PostMapping("/admin")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
@@ -48,7 +51,7 @@ public class AddressController {
     })
     @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Address> createAddressByAdmin(@RequestBody @Valid AdressCreateRequest request){
+    public ResponseEntity<Address> createAddressByAdmin(@RequestBody @Valid AddressCreateAdminRequest request){
         Address address = new Address();
 
         address.setStreet(request.getStreet());
@@ -62,6 +65,7 @@ public class AddressController {
     }
 
     @PutMapping(value = "/admin/{id}")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
@@ -75,9 +79,9 @@ public class AddressController {
     })
     @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Address> updateAddressByAdmin(@PathVariable("id") Long adressId,
-                                                @RequestBody @Valid AdressCreateRequest request){
-        Address address = addressServiceImpl.findById(adressId);
+    public ResponseEntity<Address> updateAddressByAdmin(@PathVariable("id") Long addressId,
+                                                @RequestBody @Valid AddressCreateAdminRequest request){
+        Address address = addressServiceImpl.findById(addressId);
 
         address.setStreet(request.getStreet());
         address.setHouseNumber(request.getHouseNumber());
@@ -103,7 +107,7 @@ public class AddressController {
     })
     @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Address> createAddress(@RequestBody @Valid AdressCreateRequest request){
+    public ResponseEntity<Address> createAddress(@RequestBody @Valid AddressCreateUserRequest request){
         Address address = new Address();
 
         address.setStreet(request.getStreet());
@@ -130,9 +134,9 @@ public class AddressController {
     })
     @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Address> updateAddress(@PathVariable("id") Long adressId,
-                                                 @RequestBody @Valid AdressCreateRequest request){
-        Address address = addressServiceImpl.findById(adressId);
+    public ResponseEntity<Address> updateAddress(@PathVariable("id") Long addressId,
+                                                 @RequestBody @Valid AddressCreateUserRequest request){
+        Address address = addressServiceImpl.findById(addressId);
 
         address.setStreet(request.getStreet());
         address.setHouseNumber(request.getHouseNumber());
@@ -145,6 +149,7 @@ public class AddressController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })

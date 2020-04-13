@@ -124,8 +124,7 @@ create table m_goods
 		constraint m_goods_m_dough_type_id_fk
 			references m_dough_type
 				on update cascade on delete set default,
-	" ingredients" varchar default ''::character varying,
-	ingredients varchar(255)
+	ingredients varchar(255)  default ''
 );
 
 alter table m_goods owner to postgres;

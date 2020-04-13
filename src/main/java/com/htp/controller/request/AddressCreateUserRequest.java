@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class AdressCreateRequest {
+public class AddressCreateUserRequest {
 
     @NotNull
     @NotEmpty
@@ -33,7 +33,4 @@ public class AdressCreateRequest {
 
     @Min(1)
     private Integer porchNumber;
-
-    private Boolean isPizza;
-
 }

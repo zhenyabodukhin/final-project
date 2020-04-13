@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class UserCreateRequest {
+public class UserUpdateRequest {
 
     @NotEmpty
     @NotNull
@@ -23,6 +23,4 @@ public class UserCreateRequest {
     @NotNull
     @Size(min = 6, max = 50)
     private String password;
-
-    private Boolean isDeleted;
 }

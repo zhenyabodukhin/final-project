@@ -1,12 +1,14 @@
 package com.htp.controller;
 
 import com.htp.controller.request.UserCreateRequest;
+import com.htp.controller.request.UserUpdateRequest;
 import com.htp.domain.User;
 import com.htp.service.impl.UserServiceImpl;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,7 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/all")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
@@ -42,6 +45,7 @@ public class UserController {
     }
 
     @PostMapping
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
@@ -53,14 +57,14 @@ public class UserController {
     })
     @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<User> createUser(@RequestBody @Valid UserCreateRequest request) {
+    public ResponseEntity<User> createUserByAdmin(@RequestBody @Valid UserCreateRequest request) {
         User user = new User();
 
         user.setLogin(request.getLogin());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setCreated(new Timestamp(new Date().getTime()));
         user.setChanged(new Timestamp(new Date().getTime()));
-        user.setDeleted(false);
+        user.setDeleted(request.getIsDeleted());
 
         return new ResponseEntity<>(userServiceImpl.save(user), HttpStatus.CREATED);
     }
@@ -80,7 +84,7 @@ public class UserController {
     @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<User> updateUser(@PathVariable("id") Long userId,
-                                           @RequestBody @Valid UserCreateRequest request) {
+                                           @RequestBody @Valid UserUpdateRequest request) {
         User user = userServiceImpl.findById(userId);
 
         user.setLogin(request.getLogin());
@@ -148,6 +152,7 @@ public class UserController {
     }
 
     @GetMapping("/search/value")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
@@ -165,6 +170,7 @@ public class UserController {
     }
 
     @GetMapping("/deleted")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })

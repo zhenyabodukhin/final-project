@@ -1,12 +1,14 @@
 package com.htp.controller;
 
-import com.htp.controller.request.OrderCreateRequest;
+import com.htp.controller.request.OrderCreateUserRequest;
+import com.htp.controller.request.OrderUpdateAdminRequest;
 import com.htp.domain.Order;
 import com.htp.service.impl.OrderServiceImpl;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,7 @@ public class OrderController {
     private final OrderServiceImpl orderServiceImpl;
 
     @GetMapping("/all")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
@@ -50,7 +53,7 @@ public class OrderController {
     })
     @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Order> createOrder(@RequestBody @Valid OrderCreateRequest request) {
+    public ResponseEntity<Order> createOrder(@RequestBody @Valid OrderCreateUserRequest request) {
         Order order = new Order();
 
         order.setUserId(request.getUserId());
@@ -63,6 +66,7 @@ public class OrderController {
     }
 
     @PutMapping(value = "/{id}")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
@@ -77,7 +81,7 @@ public class OrderController {
     @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Order> updateOrder(@PathVariable("id") Long orderId,
-                                             @RequestBody @Valid OrderCreateRequest request) {
+                                             @RequestBody @Valid OrderUpdateAdminRequest request) {
         Order order = orderServiceImpl.findById(orderId);
 
         order.setUserId(request.getUserId());
@@ -90,6 +94,7 @@ public class OrderController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
@@ -126,6 +131,7 @@ public class OrderController {
     }
 
     @PutMapping(value = "setDone/{id}")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
@@ -162,6 +168,7 @@ public class OrderController {
     }
 
     @GetMapping("/done")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
@@ -177,6 +184,7 @@ public class OrderController {
     }
 
     @GetMapping("/address/{id}")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
@@ -194,6 +202,7 @@ public class OrderController {
     }
 
     @GetMapping("/phone")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
