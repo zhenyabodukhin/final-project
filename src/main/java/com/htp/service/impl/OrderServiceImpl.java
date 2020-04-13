@@ -23,19 +23,19 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAll();
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public Order save(Order order) {
         return orderRepository.save(order);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public Order update(Order order) {
         return orderRepository.saveAndFlush(order);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public void delete(Long id) {
         if (orderRepository.findById(id).isPresent()) {
@@ -55,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public void setOrderDone(Long id) {
         orderRepository.setOrderDone(id);

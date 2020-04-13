@@ -3,8 +3,7 @@ package com.htp.controller;
 import com.htp.controller.request.UserCreateRequest;
 import com.htp.domain.User;
 import com.htp.service.impl.UserServiceImpl;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +30,12 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
+    @ApiOperation(value = "Get all users from server")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<User>> getUsers() {
         return new ResponseEntity<>(userServiceImpl.findAll(), HttpStatus.OK);
@@ -40,7 +45,13 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    @Transactional
+    @ApiOperation(value = "Create user")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
+    @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<User> createUser(@RequestBody @Valid UserCreateRequest request) {
         User user = new User();
@@ -58,7 +69,15 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    @Transactional
+    @ApiOperation(value = "Update user")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful updated"),
+            @ApiResponse(code = 400, message = "Invalid user ID supplied"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "User was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
+    @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<User> updateUser(@PathVariable("id") Long userId,
                                            @RequestBody @Valid UserCreateRequest request) {
@@ -75,7 +94,15 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    @Transactional
+    @ApiOperation(value = "Delete user")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful deleted"),
+            @ApiResponse(code = 400, message = "Invalid user ID supplied"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "User was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
+    @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Long> deleteUser(@PathVariable("id") Long userId) {
         User user = userServiceImpl.findById(userId);
@@ -90,6 +117,14 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
+    @ApiOperation(value = "Get user by ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 400, message = "Invalid user ID supplied"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "User was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<User> getUserById(@PathVariable("id") Long userId) {
         return new ResponseEntity<>(userServiceImpl.findById(userId), HttpStatus.OK);
@@ -98,6 +133,14 @@ public class UserController {
     @GetMapping("/search/name")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    @ApiOperation(value = "Get user by name")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 400, message = "Invalid user name supplied"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "User was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
     })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<User> getUserByName(String name) {
@@ -108,6 +151,14 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
+    @ApiOperation(value = "Get user by value")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 400, message = "Invalid user value supplied"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "User was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<User>> getUsersByValue(String value) {
         return new ResponseEntity<>(userServiceImpl.findContainsValue(value), HttpStatus.OK);
@@ -116,6 +167,12 @@ public class UserController {
     @GetMapping("/deleted")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    @ApiOperation(value = "Get deleted users")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
     })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<User>> getUsersDeleted(Boolean value) {

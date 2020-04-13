@@ -3,8 +3,7 @@ package com.htp.controller;
 import com.htp.controller.request.RoleCreateRequest;
 import com.htp.domain.Role;
 import com.htp.service.impl.RoleServiceImpl;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +25,12 @@ public class RoleController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
+    @ApiOperation(value = "Get all roles from sever")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Role>> getRoles() {
         return new ResponseEntity<>(roleServiceImpl.findAll(), HttpStatus.OK);
@@ -35,7 +40,13 @@ public class RoleController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    @Transactional
+    @ApiOperation(value = "Create role")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful created"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
+    @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Role> createRole(@RequestBody @Valid RoleCreateRequest request) {
         Role role = new Role();
@@ -50,7 +61,15 @@ public class RoleController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    @Transactional
+    @ApiOperation(value = "Update role")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful updated"),
+            @ApiResponse(code = 400, message = "Invalid role ID supplied"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "Role was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
+    @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Role> updateRole(@PathVariable("id") Long roleId,
                                            @RequestBody @Valid RoleCreateRequest request) {
@@ -66,7 +85,15 @@ public class RoleController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    @Transactional
+    @ApiOperation(value = "Delete role")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful deleted"),
+            @ApiResponse(code = 400, message = "Invalid role ID supplied"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "Role was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
+    @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Long> deleteRole(@PathVariable("id") Long roleId) {
         roleServiceImpl.delete(roleId);
@@ -77,6 +104,14 @@ public class RoleController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
+    @ApiOperation(value = "Get role by ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 400, message = "Invalid role ID supplied"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "Role was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Role> getRoleById(@PathVariable("id") Long roleId) {
         return new ResponseEntity<>(roleServiceImpl.findById(roleId), HttpStatus.OK);
@@ -85,6 +120,14 @@ public class RoleController {
     @GetMapping("/user/{id}")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    @ApiOperation(value = "Get role by user ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 400, message = "Invalid user ID supplied"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "User was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
     })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Role>> getRoleByUserId(@PathVariable("id") Long userId) {

@@ -28,7 +28,7 @@ public class RegistrationController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<User> createUser(@RequestBody @Valid UserCreateRequest request) {
         User user = new User();

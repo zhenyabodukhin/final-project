@@ -5,8 +5,7 @@ import com.htp.controller.request.GoodCreateRequest;
 import com.htp.controller.request.GoodUpdateRequest;
 import com.htp.domain.Good;
 import com.htp.service.impl.GoodServiceImpl;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +27,12 @@ public class GoodController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
+    @ApiOperation(value = "Get all goods from server")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Good>> getGoods() {
         return new ResponseEntity<>(goodServiceImpl.findAll(), HttpStatus.OK);
@@ -37,7 +42,13 @@ public class GoodController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    @Transactional
+    @ApiOperation(value = "Create good")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful created"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
+    @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Good> createGood(@RequestBody @Valid GoodCreateRequest request) {
         Good good = new Good();
@@ -56,7 +67,13 @@ public class GoodController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    @Transactional
+    @ApiOperation(value = "Create custom good")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful created"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
+    @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Good> createCustomGood(@RequestBody @Valid CustomGoodCreateRequest request) {
         return new ResponseEntity<>(goodServiceImpl.createCustomGood(request), HttpStatus.CREATED);
@@ -66,7 +83,15 @@ public class GoodController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    @Transactional
+    @ApiOperation(value = "Update good")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful updated"),
+            @ApiResponse(code = 400, message = "Invalid good ID supplied"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "Good was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
+    @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Good> updateGood(@PathVariable("id") Long goodId,
                                            @RequestBody @Valid GoodUpdateRequest request) {
@@ -86,7 +111,15 @@ public class GoodController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    @Transactional
+    @ApiOperation(value = "Delete good")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful deleted"),
+            @ApiResponse(code = 400, message = "Invalid good ID supplied"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "Good was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
+    @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Long> deleteGood(@PathVariable("id") Long goodId) {
         goodServiceImpl.delete(goodId);
@@ -97,6 +130,14 @@ public class GoodController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
+    @ApiOperation(value = "Get good by ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 400, message = "Invalid good ID supplied"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "Good was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Good> getGoodById(@PathVariable("id") Long goodId) {
         return new ResponseEntity<>(goodServiceImpl.findById(goodId), HttpStatus.OK);
@@ -105,6 +146,13 @@ public class GoodController {
     @GetMapping("/search")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    @ApiOperation(value = "Get good by name")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "Good was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
     })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Good> getGoodByName(String name) {

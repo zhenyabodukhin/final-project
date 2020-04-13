@@ -22,19 +22,19 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.findAll();
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public Role save(Role role) {
         return roleRepository.save(role);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public Role update(Role role) {
         return roleRepository.saveAndFlush(role);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public void delete(Long id) {
         if (roleRepository.findById(id).isPresent()) {

@@ -22,19 +22,19 @@ public class OrderGoodServiceImpl implements OrderGoodService {
         return orderGoodRepository.findAll();
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public OrderGood save(OrderGood orderGood) {
         return orderGoodRepository.save(orderGood);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public OrderGood update(OrderGood orderGood) {
         return orderGoodRepository.saveAndFlush(orderGood);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public void delete(Long id) {
         if (orderGoodRepository.findById(id).isPresent()) {

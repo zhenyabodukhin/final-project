@@ -22,19 +22,19 @@ public class SizeServiceImpl implements SizeService {
         return sizeRepository.findAll();
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public Size save(Size size) {
         return sizeRepository.save(size);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public Size update(Size size) {
         return sizeRepository.saveAndFlush(size);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public void delete(Long id) {
         if (sizeRepository.findById(id).isPresent()) {

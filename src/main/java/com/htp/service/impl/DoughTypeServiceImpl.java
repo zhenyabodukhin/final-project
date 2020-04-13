@@ -22,19 +22,19 @@ public class DoughTypeServiceImpl implements DoughTypeService {
         return doughTypeRepository.findAll();
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public DoughType save(DoughType doughType) {
         return doughTypeRepository.save(doughType);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public DoughType update(DoughType doughType) {
         return doughTypeRepository.saveAndFlush(doughType);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public void delete(Long id) {
         if (doughTypeRepository.findById(id).isPresent()) {

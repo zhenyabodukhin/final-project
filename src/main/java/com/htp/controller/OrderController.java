@@ -3,8 +3,7 @@ package com.htp.controller;
 import com.htp.controller.request.OrderCreateRequest;
 import com.htp.domain.Order;
 import com.htp.service.impl.OrderServiceImpl;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +27,12 @@ public class OrderController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
+    @ApiOperation(value = "Get all orders from server")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Order>> getOrders() {
         return new ResponseEntity<>(orderServiceImpl.findAll(), HttpStatus.OK);
@@ -37,7 +42,13 @@ public class OrderController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    @Transactional
+    @ApiOperation(value = "Create order")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful create"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
+    @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Order> createOrder(@RequestBody @Valid OrderCreateRequest request) {
         Order order = new Order();
@@ -55,7 +66,15 @@ public class OrderController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    @Transactional
+    @ApiOperation(value = "Update order")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful updated"),
+            @ApiResponse(code = 400, message = "Invalid order ID supplied"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "Order was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
+    @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Order> updateOrder(@PathVariable("id") Long orderId,
                                              @RequestBody @Valid OrderCreateRequest request) {
@@ -74,7 +93,15 @@ public class OrderController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    @Transactional
+    @ApiOperation(value = "Delete order")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful deleted"),
+            @ApiResponse(code = 400, message = "Invalid order ID supplied"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "Order was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
+    @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Long> deleteOrder(@PathVariable("id") Long orderId) {
         orderServiceImpl.delete(orderId);
@@ -85,6 +112,14 @@ public class OrderController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
+    @ApiOperation(value = "Get order by ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 400, message = "Invalid order ID supplied"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "Order was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Order> getOrderById(@PathVariable("id") Long orderId) {
         return new ResponseEntity<>(orderServiceImpl.findById(orderId), HttpStatus.OK);
@@ -94,7 +129,15 @@ public class OrderController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    @Transactional
+    @ApiOperation(value = "Set order done")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 400, message = "Invalid order ID supplied"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "Order was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
+    @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Long> setOrderDone(@PathVariable("id") Long orderId) {
         orderServiceImpl.setOrderDone(orderId);
@@ -105,6 +148,14 @@ public class OrderController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
+    @ApiOperation(value = "Get orders by user ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 400, message = "Invalid user ID supplied"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "User was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Order>> getOrderByUserId(@PathVariable("id") Long userId) {
         return new ResponseEntity<>(orderServiceImpl.findByUserId(userId), HttpStatus.OK);
@@ -113,6 +164,12 @@ public class OrderController {
     @GetMapping("/done")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    @ApiOperation(value = "Get orders done")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
     })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Order>> getOrderIsDone(Boolean isDone) {
@@ -123,6 +180,14 @@ public class OrderController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
     })
+    @ApiOperation(value = "Get orders by address ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 400, message = "Invalid address ID supplied"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "Address was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
+    })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Order>> getOrderByAddressId(@PathVariable("id") Long addressId) {
         return new ResponseEntity<>(orderServiceImpl.findByAddressId(addressId), HttpStatus.OK);
@@ -131,6 +196,13 @@ public class OrderController {
     @GetMapping("/phone")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Auth-Token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    @ApiOperation(value = "Get orders by phone number")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 404, message = "Order was not found"),
+            @ApiResponse(code = 500, message = "Server error, something wrong")
     })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Order>> getOrderByPhoneNumber(String phoneNumber) {

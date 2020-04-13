@@ -1,5 +1,6 @@
 package com.htp.domain;
 
+import com.htp.exception.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,7 +35,11 @@ public class Basket {
     }
 
     public Map<Long, Integer> deleteItem(Long goodId) {
-        basketMap.remove(goodId);
+        if(basketMap.containsKey(goodId)) {
+            basketMap.remove(goodId);
+        } else {
+            throw new EntityNotFoundException(Good.class, goodId);
+        }
         return basketMap;
     }
 
