@@ -37,6 +37,7 @@ public class RegistrationController {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setCreated(new Timestamp(new Date().getTime()));
         user.setChanged(new Timestamp(new Date().getTime()));
+        user.setUserEmail(request.getEmail());
         user.setDeleted(false);
 
         User createdUser = userServiceImpl.save(user);

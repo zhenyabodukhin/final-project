@@ -64,6 +64,7 @@ public class UserController {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setCreated(new Timestamp(new Date().getTime()));
         user.setChanged(new Timestamp(new Date().getTime()));
+        user.setUserEmail(request.getEmail());
         user.setDeleted(request.getIsDeleted());
 
         return new ResponseEntity<>(userServiceImpl.save(user), HttpStatus.CREATED);
@@ -89,6 +90,7 @@ public class UserController {
 
         user.setLogin(request.getLogin());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setUserEmail(request.getEmail());
         user.setChanged(new Timestamp(new Date().getTime()));
 
         return new ResponseEntity<>(userServiceImpl.update(user), HttpStatus.CREATED);

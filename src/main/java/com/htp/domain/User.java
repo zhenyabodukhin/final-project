@@ -37,6 +37,9 @@ public class User {
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
+    @Column(name = "email")
+    private String userEmail;
+
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "userRole")
     private Set<Role> roles = Collections.emptySet();

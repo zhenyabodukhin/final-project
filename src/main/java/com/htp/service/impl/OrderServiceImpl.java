@@ -2,10 +2,13 @@ package com.htp.service.impl;
 
 
 import com.htp.domain.Order;
+import com.htp.domain.User;
 import com.htp.exception.EntityNotFoundException;
 import com.htp.repository.OrderRepository;
 import com.htp.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.MailException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,15 +21,28 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
 
+    private final EmailServiceImpl emailService;
+
+    private final UserServiceImpl userService;
+
     @Override
     public List<Order> findAll() {
         return orderRepository.findAll();
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional(rollbackFor = {Exception.class}, noRollbackFor = {MailException.class})
     @Override
     public Order save(Order order) {
-        return orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
+
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByName(userName);
+        String message = "Номер вашего заказа " + savedOrder.getId().toString()
+                + ", время заказа " + savedOrder.getTime().toString()
+                + ", номер телефона " + savedOrder.getPhoneNumber();
+        emailService.sendEmail(user.getUserEmail(), message);
+
+        return savedOrder;
     }
 
     @Transactional(rollbackFor = {Exception.class})
