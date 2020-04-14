@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.Set;
 
 @Entity
-@Table(name = "m_dough_type")
+@Table(name = "m_dough_types")
 @Data
 @RequiredArgsConstructor
 @Setter

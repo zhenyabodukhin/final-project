@@ -6,7 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "m_size")
+@Table(name = "m_sizes")
 @Data
 @RequiredArgsConstructor
 @Setter
