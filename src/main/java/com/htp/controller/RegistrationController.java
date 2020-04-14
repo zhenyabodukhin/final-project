@@ -1,6 +1,6 @@
 package com.htp.controller;
 
-import com.htp.controller.request.UserCreateRequest;
+import com.htp.controller.request.UserCreateUserRequest;
 import com.htp.domain.Role;
 import com.htp.domain.User;
 import com.htp.service.impl.RoleServiceImpl;
@@ -30,7 +30,7 @@ public class RegistrationController {
     @PostMapping
     @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<User> createUser(@RequestBody @Valid UserCreateRequest request) {
+    public ResponseEntity<User> createUser(@RequestBody @Valid UserCreateUserRequest request) {
         User user = new User();
 
         user.setLogin(request.getLogin());
