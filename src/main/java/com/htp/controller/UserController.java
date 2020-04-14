@@ -1,6 +1,6 @@
 package com.htp.controller;
 
-import com.htp.controller.request.UserCreateAdminRequest;
+import com.htp.controller.request.UserCreateByAdminRequest;
 import com.htp.controller.request.UserUpdateRequest;
 import com.htp.domain.User;
 import com.htp.service.impl.UserServiceImpl;
@@ -57,7 +57,7 @@ public class UserController {
     })
     @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<User> createUserByAdmin(@RequestBody @Valid UserCreateAdminRequest request) {
+    public ResponseEntity<User> createUserByAdmin(@RequestBody @Valid UserCreateByAdminRequest request) {
         User user = new User();
 
         user.setLogin(request.getLogin());

@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class UserCreateUserRequest {
+public class UserCreateByAdminRequest {
 
     @NotEmpty
     @NotNull
@@ -24,6 +24,8 @@ public class UserCreateUserRequest {
     @NotNull
     @Size(min = 6, max = 50)
     private String password;
+
+    private Boolean isDeleted;
 
     @Pattern(regexp = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;

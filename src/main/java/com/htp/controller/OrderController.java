@@ -1,7 +1,7 @@
 package com.htp.controller;
 
-import com.htp.controller.request.OrderCreateUserRequest;
-import com.htp.controller.request.OrderUpdateAdminRequest;
+import com.htp.controller.request.OrderCreateByUserRequest;
+import com.htp.controller.request.OrderUpdateByAdminRequest;
 import com.htp.domain.Order;
 import com.htp.service.impl.OrderServiceImpl;
 import io.swagger.annotations.*;
@@ -53,7 +53,7 @@ public class OrderController {
     })
     @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Order> createOrder(@RequestBody @Valid OrderCreateUserRequest request) {
+    public ResponseEntity<Order> createOrder(@RequestBody @Valid OrderCreateByUserRequest request) {
         Order order = new Order();
 
         order.setUserId(request.getUserId());
@@ -81,7 +81,7 @@ public class OrderController {
     @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Order> updateOrder(@PathVariable("id") Long orderId,
-                                             @RequestBody @Valid OrderUpdateAdminRequest request) {
+                                             @RequestBody @Valid OrderUpdateByAdminRequest request) {
         Order order = orderServiceImpl.findById(orderId);
 
         order.setUserId(request.getUserId());

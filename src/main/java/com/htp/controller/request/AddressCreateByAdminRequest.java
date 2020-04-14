@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class AddressCreateAdminRequest {
+public class AddressCreateByAdminRequest {
 
     @NotNull
     @NotEmpty

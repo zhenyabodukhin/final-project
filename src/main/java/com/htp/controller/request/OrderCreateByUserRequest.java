@@ -11,7 +11,7 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class OrderUpdateAdminRequest {
+public class OrderCreateByUserRequest {
 
     @Min(1)
     private Long userId;
@@ -21,6 +21,4 @@ public class OrderUpdateAdminRequest {
 
     @Pattern(regexp = "^((\\+3|7|5)+([0-9]){10})$")
     private String phoneNumber;
-
-    private Boolean isDone;
 }

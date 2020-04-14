@@ -1,7 +1,7 @@
 package com.htp.controller;
 
-import com.htp.controller.request.AddressCreateAdminRequest;
-import com.htp.controller.request.AddressCreateUserRequest;
+import com.htp.controller.request.AddressCreateByAdminRequest;
+import com.htp.controller.request.AddressCreateByUserRequest;
 import com.htp.domain.Address;
 import com.htp.service.impl.AddressServiceImpl;
 import io.swagger.annotations.*;
@@ -51,7 +51,7 @@ public class AddressController {
     })
     @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Address> createAddressByAdmin(@RequestBody @Valid AddressCreateAdminRequest request){
+    public ResponseEntity<Address> createAddressByAdmin(@RequestBody @Valid AddressCreateByAdminRequest request){
         Address address = new Address();
 
         address.setStreet(request.getStreet());
@@ -80,7 +80,7 @@ public class AddressController {
     @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Address> updateAddressByAdmin(@PathVariable("id") Long addressId,
-                                                @RequestBody @Valid AddressCreateAdminRequest request){
+                                                @RequestBody @Valid AddressCreateByAdminRequest request){
         Address address = addressServiceImpl.findById(addressId);
 
         address.setStreet(request.getStreet());
@@ -107,7 +107,7 @@ public class AddressController {
     })
     @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Address> createAddress(@RequestBody @Valid AddressCreateUserRequest request){
+    public ResponseEntity<Address> createAddress(@RequestBody @Valid AddressCreateByUserRequest request){
         Address address = new Address();
 
         address.setStreet(request.getStreet());
@@ -135,7 +135,7 @@ public class AddressController {
     @Transactional(rollbackFor = {Exception.class})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Address> updateAddress(@PathVariable("id") Long addressId,
-                                                 @RequestBody @Valid AddressCreateUserRequest request){
+                                                 @RequestBody @Valid AddressCreateByUserRequest request){
         Address address = addressServiceImpl.findById(addressId);
 
         address.setStreet(request.getStreet());
