@@ -17,14 +17,15 @@ public class UserCreateByAdminRequest {
 
     @NotEmpty
     @NotNull
-    @Size(min = 6, max = 20)
+    @Size(min = 6, max = 100)
     private String login;
 
     @NotEmpty
     @NotNull
-    @Size(min = 6, max = 50)
+    @Size(min = 6, max = 100)
     private String password;
 
+    @NotNull
     private Boolean isDeleted;
 
     @Pattern(regexp = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")

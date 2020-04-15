@@ -23,19 +23,19 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional
     @Override
     public User save(User user) {
         return userRepository.save(user);
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional
     @Override
     public User update(User user) {
         return userRepository.saveAndFlush(user);
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional
     @Override
     public void delete(Long id) {
         if(userRepository.findById(id).isPresent()) {

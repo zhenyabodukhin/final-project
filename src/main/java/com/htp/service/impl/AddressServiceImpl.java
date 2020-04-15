@@ -23,19 +23,19 @@ public class AddressServiceImpl implements AddressService {
         return addressRepository.findAll();
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional
     @Override
     public Address save(Address address) {
         return addressRepository.save(address);
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional
     @Override
     public Address update(Address address) {
         return addressRepository.saveAndFlush(address);
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional
     @Override
     public void delete(Long id) {
         if (addressRepository.findById(id).isPresent()) {

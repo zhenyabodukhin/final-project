@@ -22,6 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GoodController {
 
+    private static final String EMPTY_STRING = "";
+
     private final GoodServiceImpl goodServiceImpl;
 
     @GetMapping("/all")
@@ -60,7 +62,7 @@ public class GoodController {
         good.setGoodWeight(request.getWeight());
         good.setSizeId(request.getSizeId());
         good.setDoughId(request.getDoughId());
-        good.setIngredients("");
+        good.setIngredients(EMPTY_STRING);
 
         return new ResponseEntity<>(goodServiceImpl.save(good), HttpStatus.CREATED);
     }

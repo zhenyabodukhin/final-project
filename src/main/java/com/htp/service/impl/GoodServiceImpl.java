@@ -34,19 +34,19 @@ public class GoodServiceImpl implements GoodService {
         return goodRepository.findAll();
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional
     @Override
     public Good save(Good good) {
         return goodRepository.save(good);
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional
     @Override
     public Good update(Good good) {
         return goodRepository.saveAndFlush(good);
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional
     @Override
     public void delete(Long id) {
         if (goodRepository.findById(id).isPresent()) {
@@ -71,7 +71,7 @@ public class GoodServiceImpl implements GoodService {
         return goodRepository.findGoodByName(name);
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional
     @Override
     public Good createCustomGood(CustomGoodCreateRequest request) {
         customGood.putRequest(request);

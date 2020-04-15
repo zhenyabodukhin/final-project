@@ -2,10 +2,7 @@ package com.htp.controller.request;
 
 import lombok.*;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
@@ -16,10 +13,11 @@ import javax.validation.constraints.Size;
 public class RoleCreateRequest {
 
     @Min(1)
+    @Max(2147483647)
     private Long userId;
 
     @NotEmpty
     @NotNull
-    @Size(min = 7, max = 20)
+    @Size(min = 5, max = 100)
     private String role;
 }

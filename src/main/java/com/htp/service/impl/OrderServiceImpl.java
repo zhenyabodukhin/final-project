@@ -7,7 +7,6 @@ import com.htp.exception.EntityNotFoundException;
 import com.htp.repository.OrderRepository;
 import com.htp.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.MailException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +29,7 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAll();
     }
 
-    @Transactional(rollbackFor = {Exception.class}, noRollbackFor = {MailException.class})
+    @Transactional
     @Override
     public Order save(Order order) {
         Order savedOrder = orderRepository.save(order);
@@ -45,13 +44,13 @@ public class OrderServiceImpl implements OrderService {
         return savedOrder;
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional
     @Override
     public Order update(Order order) {
         return orderRepository.saveAndFlush(order);
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional
     @Override
     public void delete(Long id) {
         if (orderRepository.findById(id).isPresent()) {
@@ -71,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional
     @Override
     public void setOrderDone(Long id) {
         orderRepository.setOrderDone(id);

@@ -1,3 +1,10 @@
+CREATE SEQUENCE public.m_users_id_seq
+    INCREMENT 1
+    START 31
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
 create table m_users
 (
 	id bigserial not null
@@ -10,17 +17,17 @@ create table m_users
 	is_deleted boolean default false
 );
 
-ALTER SEQUENCE public.m_users_id_seq
-    INCREMENT 1
-    START 31
-    MINVALUE 1
-    MAXVALUE 9223372036854775807
-    CACHE 1;
-
 alter table m_users owner to postgres;
 
 create unique index m_users_login_uindex
 	on m_users (login);
+
+CREATE SEQUENCE public.m_roles_id_seq
+    INCREMENT 1
+    START 15
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
 
 create table m_roles
 (
@@ -34,14 +41,14 @@ create table m_roles
 	role varchar default 'ROLE_USER'::character varying not null
 );
 
-ALTER SEQUENCE public.m_roles_id_seq
+alter table m_roles owner to postgres;
+
+CREATE SEQUENCE public.m_address_id_seq
     INCREMENT 1
-    START 15
+    START 2
     MINVALUE 1
     MAXVALUE 9223372036854775807
     CACHE 1;
-
-alter table m_roles owner to postgres;
 
 create table m_address
 (
@@ -56,17 +63,17 @@ create table m_address
 	n_porch integer
 );
 
-ALTER SEQUENCE public.m_address_id_seq
+alter table m_address owner to postgres;
+
+create index m_adress_street_index
+	on m_address (street);
+
+CREATE SEQUENCE public.m_orders_id_seq
     INCREMENT 1
     START 2
     MINVALUE 1
     MAXVALUE 9223372036854775807
     CACHE 1;
-
-alter table m_address owner to postgres;
-
-create index m_adress_street_index
-	on m_address (street);
 
 create table m_orders
 (
@@ -86,14 +93,14 @@ create table m_orders
 	is_done boolean default false
 );
 
-ALTER SEQUENCE public.m_orders_id_seq
+alter table m_orders owner to postgres;
+
+CREATE SEQUENCE m_price_id_seq
     INCREMENT 1
-    START 2
+    START 7
     MINVALUE 1
     MAXVALUE 9223372036854775807
     CACHE 1;
-
-alter table m_orders owner to postgres;
 
 create table m_price
 (
@@ -103,14 +110,14 @@ create table m_price
 	price double precision not null
 );
 
-ALTER SEQUENCE public.m_price_id_seq
+alter table m_price owner to postgres;
+
+CREATE SEQUENCE public.m_size_id_seq
     INCREMENT 1
-    START 7
+    START 4
     MINVALUE 1
     MAXVALUE 9223372036854775807
     CACHE 1;
-
-alter table m_price owner to postgres;
 
 create table m_size
 (
@@ -124,14 +131,14 @@ create table m_size
 				on update cascade on delete set default
 );
 
-ALTER SEQUENCE public.m_size_id_seq
+alter table m_size owner to postgres;
+
+CREATE SEQUENCE public.m_dough_type_id_seq
     INCREMENT 1
     START 4
     MINVALUE 1
     MAXVALUE 9223372036854775807
     CACHE 1;
-
-alter table m_size owner to postgres;
 
 create table m_dough_type
 (
@@ -145,14 +152,14 @@ create table m_dough_type
 				on update cascade on delete set default
 );
 
-ALTER SEQUENCE public.m_dough_type_id_seq
+alter table m_dough_type owner to postgres;
+
+CREATE SEQUENCE public.m_goods_id_seq
     INCREMENT 1
-    START 4
+    START 2
     MINVALUE 1
     MAXVALUE 9223372036854775807
     CACHE 1;
-
-alter table m_dough_type owner to postgres;
 
 create table m_goods
 (
@@ -176,14 +183,14 @@ create table m_goods
 	ingredients varchar(255)  default ''
 );
 
-ALTER SEQUENCE public.m_goods_id_seq
+alter table m_goods owner to postgres;
+
+CREATE SEQUENCE public.order_goods_id_seq
     INCREMENT 1
     START 2
     MINVALUE 1
     MAXVALUE 9223372036854775807
     CACHE 1;
-
-alter table m_goods owner to postgres;
 
 create table order_goods
 (
@@ -200,13 +207,6 @@ create table order_goods
 				on update cascade,
 	count integer not null
 );
-
-ALTER SEQUENCE public.order_goods_id_seq
-    INCREMENT 1
-    START 2
-    MINVALUE 1
-    MAXVALUE 9223372036854775807
-    CACHE 1;
 
 alter table order_goods owner to postgres;
 

@@ -22,19 +22,19 @@ public class PriceServiceImpl implements PriceService {
         return priceRepository.findAll();
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional
     @Override
     public Price save(Price price) {
         return priceRepository.save(price);
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional
     @Override
     public Price update(Price price) {
         return priceRepository.saveAndFlush(price);
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional
     @Override
     public void delete(Long id) {
         if (priceRepository.findById(id).isPresent()) {
