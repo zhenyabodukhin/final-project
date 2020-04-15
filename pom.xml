@@ -7,14 +7,20 @@
 
     <groupId>com.htp.context</groupId>
     <artifactId>final-project</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.1</version>
+    <modules>
+        <module>common</module>
+        <module>web</module>
+    </modules>
 
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <properties>
         <dbcp-version>1.4</dbcp-version>
         <log4j>1.2.17</log4j>
         <swagger.version>2.9.2</swagger.version>
+        <postgres>42.2.12</postgres>
+        <json>0.9.1</json>
     </properties>
 
     <parent>
@@ -136,7 +142,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.12</version>
+            <version>${postgres}</version>
         </dependency>
 
         <dependency>
@@ -154,7 +160,7 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
+            <version>${json}</version>
         </dependency>
 
         <dependency>
