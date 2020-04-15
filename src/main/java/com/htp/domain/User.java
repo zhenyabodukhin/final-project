@@ -14,12 +14,13 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {"id", "roles", "orders"})
-@ToString(exclude = {"roles", "orders"})
+@EqualsAndHashCode(exclude = {"id", "roles"})
+@ToString(exclude = {"roles"})
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "userIdSeq", sequenceName = "m_users_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userIdSeq")
     private Long id;
 
     @Column(name = "login")
@@ -43,9 +44,4 @@ public class User {
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "userRole")
     private Set<Role> roles = Collections.emptySet();
-
-//    @JsonManagedReference
-//    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "userOrder")
-//    private Set<Order> orders = Collections.emptySet();
-
 }

@@ -11,12 +11,13 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {"id", "goods", "priceSize"})
-@ToString(exclude = {"goods", "priceSize"})
+@EqualsAndHashCode(exclude = {"id", "priceSize"})
+@ToString(exclude = {"priceSize"})
 public class Size {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "sizeIdSeq", sequenceName = "m_size_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sizeIdSeq")
     private Long id;
 
     @Column(name = "size")
@@ -24,10 +25,6 @@ public class Size {
 
     @Column(name = "price_id")
     private Long priceId;
-
-//    @JsonManagedReference
-//    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "sizeGood")
-//    private Set<Good> goods = Collections.emptySet();
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)

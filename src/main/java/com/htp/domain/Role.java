@@ -16,8 +16,8 @@ import javax.persistence.*;
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @SequenceGenerator(name = "roleIdSeq", sequenceName = "m_roles_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "roleIdSeq")
     private Long id;
 
     @Column(name = "user_id")

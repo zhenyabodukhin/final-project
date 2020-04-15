@@ -19,8 +19,8 @@ import java.util.Set;
 public class DoughType {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @SequenceGenerator(name = "doughTypeIdSeq", sequenceName = "m_dough_type_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "doughTypeIdSeq")    private Long id;
 
     @Column(name = "type")
     private String doughType;

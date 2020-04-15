@@ -10,26 +10,15 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {"id", "goods", "sizes", "doughTypes"})
-@ToString(exclude = {"goods", "sizes", "doughTypes"})
+@EqualsAndHashCode(exclude = {"id"})
+@ToString
 public class Price {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "priceIdSeq", sequenceName = "m_price_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "priceIdSeq")
     private Long id;
 
     @Column(name = "price")
     private Double price;
-
-//    @JsonManagedReference
-//    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "priceGood")
-//    private Set<Good> goods = Collections.emptySet();
-//
-//    @JsonManagedReference
-//    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "priceSize")
-//    private Set<Size> sizes = Collections.emptySet();
-//
-//    @JsonManagedReference
-//    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "priceDoughType")
-//    private Set<DoughType> doughTypes = Collections.emptySet();
 }

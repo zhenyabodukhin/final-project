@@ -16,7 +16,8 @@ import javax.persistence.*;
 public class OrderGood {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "orderGoodIdSeq", sequenceName = "order_goods_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orderGoodIdSeq")
     private Long id;
 
     @Column(name = "order_id")

@@ -20,7 +20,8 @@ import java.util.Set;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "orderIdSeq", sequenceName = "m_orders_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orderIdSeq")
     private Long id;
 
     @Column(name = "user_id")

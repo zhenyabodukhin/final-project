@@ -20,7 +20,8 @@ public class Good {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "goodIdSeq", sequenceName = "m_goods_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "goodIdSeq")
     private Long id;
 
     @Column(name = "name")
@@ -59,5 +60,4 @@ public class Good {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dough_id", insertable = false, updatable = false)
     private DoughType doughTypeGood;
-
 }

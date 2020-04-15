@@ -18,7 +18,8 @@ import java.util.Set;
 public class Address {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "addressIdSeq", sequenceName = "m_address_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "addressIdSeq")
     private Long id;
 
     @Column(name = "street")
