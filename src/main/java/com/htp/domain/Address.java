@@ -18,7 +18,8 @@ import java.util.Set;
 public class Address {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "addressIdSeq", sequenceName = "m_address_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "addressIdSeq")
     private Long id;
 
     @Column(name = "street")
@@ -40,6 +41,6 @@ public class Address {
     private Boolean isPizzaAddress;
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "addressOrder")
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "addressOrder")
     private Set<Order> orders = Collections.emptySet();
 }

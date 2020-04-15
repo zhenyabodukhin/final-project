@@ -2,6 +2,7 @@ package com.htp.repository;
 
 import com.htp.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -18,6 +19,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u where u.isDeleted = :isDeleted")
     List<User> findIsDeleted (@Param("isDeleted") boolean value);
 
+    @Modifying
     @Query("update User u set u.isDeleted=true where u.id=:id")
     void delete (@Param("id") Long id);
 }

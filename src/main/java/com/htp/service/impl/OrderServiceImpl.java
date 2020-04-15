@@ -2,19 +2,27 @@ package com.htp.service.impl;
 
 
 import com.htp.domain.Order;
+import com.htp.domain.User;
+import com.htp.exception.EntityNotFoundException;
 import com.htp.repository.OrderRepository;
 import com.htp.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
-@Service("OrderServiceImpl")
+@Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-    @Autowired
-    OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
+
+    private final EmailServiceImpl emailService;
+
+    private final UserServiceImpl userService;
 
     @Override
     public List<Order> findAll() {
@@ -24,7 +32,16 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public Order save(Order order) {
-        return orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
+
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByName(userName);
+        String message = "Номер вашего заказа " + savedOrder.getId().toString()
+                + ", время заказа " + savedOrder.getTime().toString()
+                + ", номер телефона " + savedOrder.getPhoneNumber();
+        emailService.sendEmail(user.getUserEmail(), message);
+
+        return savedOrder;
     }
 
     @Transactional
@@ -36,12 +53,21 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public void delete(Long id) {
-        orderRepository.deleteById(id);
+        if (orderRepository.findById(id).isPresent()) {
+            orderRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException(Order.class, id);
+        }
     }
 
     @Override
     public Order findById(Long id) {
-        return orderRepository.findById(id).get();
+        Optional<Order> result = orderRepository.findById(id);
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            throw new EntityNotFoundException(Order.class, id);
+        }
     }
 
     @Transactional

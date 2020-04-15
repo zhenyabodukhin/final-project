@@ -4,8 +4,8 @@ import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -13,21 +13,18 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class UserCreateRequest {
+public class UserUpdateRequest {
 
     @NotEmpty
     @NotNull
-    @Size(min = 2, max = 50)
+    @Size(min = 6, max = 100)
     private String login;
 
     @NotEmpty
     @NotNull
-    @Size(min = 6, max = 50)
+    @Size(min = 6, max = 100)
     private String password;
 
-    private Timestamp created;
-
-    private Timestamp changed;
-
-    private Boolean isDeleted;
+    @Pattern(regexp = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    private String email;
 }

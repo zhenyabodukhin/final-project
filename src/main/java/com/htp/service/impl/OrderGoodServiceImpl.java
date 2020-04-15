@@ -1,19 +1,21 @@
 package com.htp.service.impl;
 
 import com.htp.domain.OrderGood;
+import com.htp.exception.EntityNotFoundException;
 import com.htp.repository.OrderGoodRepository;
 import com.htp.service.OrderGoodService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
-@Service("OrderGoodServiceImpl")
+@Service
+@RequiredArgsConstructor
 public class OrderGoodServiceImpl implements OrderGoodService {
 
-    @Autowired
-    OrderGoodRepository orderGoodRepository;
+    private final OrderGoodRepository orderGoodRepository;
 
     @Override
     public List<OrderGood> findAll() {
@@ -35,12 +37,21 @@ public class OrderGoodServiceImpl implements OrderGoodService {
     @Transactional
     @Override
     public void delete(Long id) {
-        orderGoodRepository.deleteById(id);
+        if (orderGoodRepository.findById(id).isPresent()) {
+            orderGoodRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException(OrderGood.class, id);
+        }
     }
 
     @Override
     public OrderGood findById(Long id) {
-        return orderGoodRepository.findById(id).get();
+        Optional<OrderGood> result = orderGoodRepository.findById(id);
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            throw new EntityNotFoundException(OrderGood.class, id);
+        }
     }
 
     @Override

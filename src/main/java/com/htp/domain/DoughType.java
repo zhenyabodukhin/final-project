@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.Set;
 
 @Entity
-@Table(name = "m_dough_type")
+@Table(name = "m_dough_types")
 @Data
 @RequiredArgsConstructor
 @Setter
@@ -19,8 +19,8 @@ import java.util.Set;
 public class DoughType {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @SequenceGenerator(name = "doughTypeIdSeq", sequenceName = "m_dough_type_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "doughTypeIdSeq")    private Long id;
 
     @Column(name = "type")
     private String doughType;
@@ -29,11 +29,11 @@ public class DoughType {
     private Long priceId;
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "doughTypeGood")
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "doughTypeGood")
     private Set<Good> goods = Collections.emptySet();
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "price_id", insertable = false, updatable = false)
     private Price priceDoughType;
 }

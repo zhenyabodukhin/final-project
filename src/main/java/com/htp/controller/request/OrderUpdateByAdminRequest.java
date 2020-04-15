@@ -2,9 +2,10 @@ package com.htp.controller.request;
 
 import lombok.*;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.sql.Timestamp;
 
 @Setter
 @Getter
@@ -12,18 +13,19 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class OrderCreateRequest {
-//TODO
+public class OrderUpdateByAdminRequest {
+
     @Min(1)
+    @Max(2147483647)
     private Long userId;
 
     @Min(1)
+    @Max(2147483647)
     private Long addressId;
-
-    private Timestamp time;
 
     @Pattern(regexp = "^((\\+3|7|5)+([0-9]){10})$")
     private String phoneNumber;
 
+    @NotNull
     private Boolean isDone;
 }

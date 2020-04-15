@@ -2,10 +2,7 @@ package com.htp.controller.request;
 
 import lombok.*;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
@@ -13,7 +10,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class AdressCreateRequest {
+public class AddressCreateByAdminRequest {
 
     @NotNull
     @NotEmpty
@@ -26,14 +23,17 @@ public class AdressCreateRequest {
     private String houseNumber;
 
     @Min(1)
+    @Max(2147483647)
     private Integer flatNumber;
 
     @Min(1)
+    @Max(2147483647)
     private Integer floorNumber;
 
     @Min(1)
+    @Max(2147483647)
     private Integer porchNumber;
 
+    @NotNull
     private Boolean isPizza;
-
 }

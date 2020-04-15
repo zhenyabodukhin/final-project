@@ -2,6 +2,7 @@ package com.htp.controller.request;
 
 import lombok.*;
 
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 
 @Getter
@@ -13,5 +14,6 @@ import javax.validation.constraints.DecimalMin;
 public class PriceCreateRequest {
 
     @DecimalMin(value = "0.01")
+    @DecimalMax(value = "2147483647")
     private Double price;
 }

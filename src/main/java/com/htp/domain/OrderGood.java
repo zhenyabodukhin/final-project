@@ -16,7 +16,8 @@ import javax.persistence.*;
 public class OrderGood {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "orderGoodIdSeq", sequenceName = "order_goods_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orderGoodIdSeq")
     private Long id;
 
     @Column(name = "order_id")
@@ -29,12 +30,12 @@ public class OrderGood {
     private Integer goodCount;
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", insertable = false, updatable = false)
     private Order order;
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "good_id", insertable = false, updatable = false)
     private Good good;
 }

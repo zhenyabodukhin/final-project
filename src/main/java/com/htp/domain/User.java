@@ -14,12 +14,13 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {"id", "roles", "orders"})
-@ToString(exclude = {"roles", "orders"})
+@EqualsAndHashCode(exclude = {"id", "roles"})
+@ToString(exclude = {"roles"})
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "userIdSeq", sequenceName = "m_users_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userIdSeq")
     private Long id;
 
     @Column(name = "login")
@@ -37,12 +38,10 @@ public class User {
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
+    @Column(name = "email")
+    private String userEmail;
+
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "userRole")
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "userRole")
     private Set<Role> roles = Collections.emptySet();
-
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "userOrder")
-    private Set<Order> orders = Collections.emptySet();
-
 }
